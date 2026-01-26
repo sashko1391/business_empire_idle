@@ -1,4 +1,5 @@
 <!DOCTYPE html>
+
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -11,1215 +12,1538 @@
             box-sizing: border-box;
         }
 
-        body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background: linear-gradient(135deg, #1c1c1e 0%, #2c2c2e 100%);
-            min-height: 100vh;
-            color: #eee;
-            padding: 20px;
-        }
-
-        .container {
-            max-width: 600px;
-            margin: 0 auto;
-        }
-
-        h1 {
-            text-align: center;
-            margin-bottom: 10px;
-            color: #f5a623;
-            font-size: 2rem;
-        }
-
-        .money-display {
-            text-align: center;
-            background: rgba(245, 166, 35, 0.1);
-            border: 1px solid rgba(245, 166, 35, 0.2);
-            padding: 20px;
-            border-radius: 12px;
-            margin-bottom: 20px;
-        }
-
-        .money-amount {
-            font-size: 2.5rem;
-            font-weight: bold;
-            color: #f5a623;
-        }
-
-        .income-rate {
-            font-size: 1rem;
-            color: #888;
-            margin-top: 5px;
-        }
-
-        .prestige-info {
-            font-size: 0.9rem;
-            color: #f5a623;
-            margin-top: 10px;
-        }
-
-        .work-section {
-            text-align: center;
-            margin-bottom: 30px;
-        }
-
-        .work-btn {
-            background: linear-gradient(135deg, #f5a623 0%, #e08e0b 100%);
-            border: none;
-            color: #1c1c1e;
-            font-size: 1.5rem;
-            font-weight: bold;
-            padding: 20px 60px;
-            border-radius: 12px;
-            cursor: pointer;
-            transition: transform 0.1s, box-shadow 0.1s;
-            box-shadow: 0 4px 15px rgba(245, 166, 35, 0.3);
-        }
-
-        .work-btn:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 6px 20px rgba(245, 166, 35, 0.4);
-        }
-
-        .work-btn:active {
-            transform: translateY(1px) scale(0.98);
-        }
-
-        .section-title {
-            font-size: 1.3rem;
-            margin-bottom: 15px;
-            color: #f5a623;
-            border-bottom: 2px solid #f5a623;
-            padding-bottom: 5px;
-        }
-
-        .tabs {
-            display: flex;
-            margin-bottom: 20px;
-            background: rgba(0, 0, 0, 0.3);
-            border-radius: 10px;
-            padding: 5px;
-        }
-
-        .tab-btn {
-            flex: 1;
-            padding: 12px 20px;
-            border: none;
-            background: transparent;
-            color: #888;
-            font-size: 1rem;
-            font-weight: bold;
-            cursor: pointer;
-            border-radius: 8px;
-            transition: all 0.2s;
-        }
-
-        .tab-btn:hover {
-            color: #ccc;
-        }
-
-        .tab-btn.active {
-            background: rgba(245, 166, 35, 0.2);
-            color: #f5a623;
-        }
-
-        .tab-content {
-            display: none;
-        }
-
-        .tab-content.active {
-            display: block;
-        }
-
-        .bonuses-summary {
-            background: linear-gradient(135deg, rgba(245, 166, 35, 0.1) 0%, rgba(224, 142, 11, 0.1) 100%);
-            border: 1px solid rgba(245, 166, 35, 0.3);
-            border-radius: 12px;
-            padding: 15px;
-            margin-top: 20px;
-        }
-
-        .bonuses-summary h3 {
-            color: #f5a623;
-            font-size: 1rem;
-            margin-bottom: 12px;
-            display: flex;
-            align-items: center;
-            gap: 8px;
-        }
-
-        .bonus-grid {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 10px;
-        }
-
-        .bonus-item {
-            background: rgba(0, 0, 0, 0.3);
-            padding: 10px;
-            border-radius: 8px;
-        }
-
-        .bonus-label {
-            font-size: 0.75rem;
-            color: #888;
-            margin-bottom: 3px;
-        }
-
-        .bonus-value {
-            font-size: 1rem;
-            font-weight: bold;
-            color: #f5a623;
-        }
-
-        .bonus-value.neutral {
-            color: #666;
-        }
-
-        .businesses {
-            margin-bottom: 30px;
-        }
-
-        .business-card {
-            background: rgba(255, 255, 255, 0.03);
-            border: 1px solid rgba(255, 255, 255, 0.08);
-            border-radius: 12px;
-            padding: 15px;
-            margin-bottom: 15px;
-            display: flex;
-            align-items: center;
-            gap: 15px;
-        }
-
-        .business-card.locked {
-            opacity: 0.5;
-            background: rgba(0, 0, 0, 0.3);
-            border: 1px dashed rgba(255, 255, 255, 0.15);
-        }
-
-        .business-card.locked .business-icon {
-            filter: grayscale(1);
-        }
-
-        .lock-info {
-            font-size: 0.8rem;
-            color: #f5a623;
-            margin-top: 5px;
-        }
-
-        .lock-info.prestige-lock {
-            color: #ff6b6b;
-        }
-
-        .business-icon {
-            width: 60px;
-            height: 60px;
-            background: rgba(245, 166, 35, 0.15);
-            border-radius: 10px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 1.8rem;
-        }
-
-        .business-info {
-            flex: 1;
-        }
-
-        .business-name {
-            font-size: 1.1rem;
-            font-weight: bold;
-            margin-bottom: 5px;
-        }
-
-        .business-stats {
-            font-size: 0.85rem;
-            color: #888;
-        }
-
-        .business-stats span {
-            color: #f5a623;
-        }
-
-        .buy-btn {
-            background: linear-gradient(135deg, #f5a623 0%, #e08e0b 100%);
-            border: none;
-            color: #1c1c1e;
-            padding: 12px 20px;
-            border-radius: 8px;
-            cursor: pointer;
-            font-weight: bold;
-            transition: transform 0.1s, opacity 0.2s;
-            min-width: 100px;
-        }
-
-        .buy-btn:hover:not(:disabled) {
-            transform: scale(1.05);
-        }
-
-        .buy-btn:disabled {
-            opacity: 0.4;
-            cursor: not-allowed;
-        }
-
-        .prestige-section {
-            background: linear-gradient(135deg, rgba(245, 166, 35, 0.1) 0%, rgba(224, 142, 11, 0.1) 100%);
-            border: 1px solid rgba(245, 166, 35, 0.3);
-            border-radius: 12px;
-            padding: 20px;
-            text-align: center;
-            margin-top: 20px;
-        }
-
-        .upgrades {
-            margin-bottom: 30px;
-        }
-
-        .upgrade-card {
-            background: rgba(245, 166, 35, 0.05);
-            border: 1px solid rgba(245, 166, 35, 0.2);
-            border-radius: 12px;
-            padding: 15px;
-            margin-bottom: 12px;
-            display: flex;
-            align-items: center;
-            gap: 15px;
-        }
-
-        .upgrade-card.purchased {
-            opacity: 0.6;
-            background: rgba(76, 175, 80, 0.1);
-            border-color: rgba(76, 175, 80, 0.3);
-        }
-
-        .upgrade-card.locked {
-            opacity: 0.4;
-            background: rgba(0, 0, 0, 0.3);
-            border: 1px dashed rgba(255, 255, 255, 0.15);
-        }
-
-        .upgrade-icon {
-            width: 50px;
-            height: 50px;
-            background: rgba(245, 166, 35, 0.15);
-            border-radius: 10px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 1.5rem;
-        }
-
-        .upgrade-card.purchased .upgrade-icon {
-            background: rgba(76, 175, 80, 0.2);
-        }
-
-        .upgrade-info {
-            flex: 1;
-        }
-
-        .upgrade-name {
-            font-size: 1rem;
-            font-weight: bold;
-            margin-bottom: 3px;
-        }
-
-        .upgrade-effect {
-            font-size: 0.8rem;
-            color: #f5a623;
-        }
-
-        .upgrade-type {
-            font-size: 0.7rem;
-            color: #666;
-            text-transform: uppercase;
-            margin-top: 2px;
-        }
+```
+    body {
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        background: linear-gradient(135deg, #1c1c1e 0%, #2c2c2e 100%);
+        min-height: 100vh;
+        color: #eee;
+        padding: 20px;
+    }
+
+    .container {
+        max-width: 600px;
+        margin: 0 auto;
+    }
+
+    h1 {
+        text-align: center;
+        margin-bottom: 10px;
+        color: #f5a623;
+        font-size: 2rem;
+    }
+
+    .money-display {
+        text-align: center;
+        background: rgba(245, 166, 35, 0.1);
+        border: 1px solid rgba(245, 166, 35, 0.2);
+        padding: 20px;
+        border-radius: 12px;
+        margin-bottom: 20px;
+    }
+
+    .money-amount {
+        font-size: 2.5rem;
+        font-weight: bold;
+        color: #f5a623;
+    }
+
+    .income-rate {
+        font-size: 1rem;
+        color: #888;
+        margin-top: 5px;
+    }
+
+    .prestige-info {
+        font-size: 0.9rem;
+        color: #f5a623;
+        margin-top: 10px;
+    }
+
+    .work-section {
+        text-align: center;
+        margin-bottom: 30px;
+    }
+
+    .work-btn {
+        background: linear-gradient(135deg, #f5a623 0%, #e08e0b 100%);
+        border: none;
+        color: #1c1c1e;
+        font-size: 1.5rem;
+        font-weight: bold;
+        padding: 20px 60px;
+        border-radius: 12px;
+        cursor: pointer;
+        transition: transform 0.1s, box-shadow 0.1s;
+        box-shadow: 0 4px 15px rgba(245, 166, 35, 0.3);
+    }
+
+    .work-btn:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 6px 20px rgba(245, 166, 35, 0.4);
+    }
+
+    .work-btn:active {
+        transform: translateY(1px) scale(0.98);
+    }
+
+    .section-title {
+        font-size: 1.3rem;
+        margin-bottom: 15px;
+        color: #f5a623;
+        border-bottom: 2px solid #f5a623;
+        padding-bottom: 5px;
+    }
+
+    .tabs {
+        display: flex;
+        margin-bottom: 20px;
+        background: rgba(0, 0, 0, 0.3);
+        border-radius: 10px;
+        padding: 5px;
+    }
+
+    .tab-btn {
+        flex: 1;
+        padding: 12px 20px;
+        border: none;
+        background: transparent;
+        color: #888;
+        font-size: 1rem;
+        font-weight: bold;
+        cursor: pointer;
+        border-radius: 8px;
+        transition: all 0.2s;
+    }
+
+    .tab-btn:hover {
+        color: #ccc;
+    }
+
+    .tab-btn.active {
+        background: rgba(245, 166, 35, 0.2);
+        color: #f5a623;
+    }
+
+    .tab-content {
+        display: none;
+    }
+
+    .tab-content.active {
+        display: block;
+    }
+
+    .bonuses-summary {
+        background: linear-gradient(135deg, rgba(245, 166, 35, 0.1) 0%, rgba(224, 142, 11, 0.1) 100%);
+        border: 1px solid rgba(245, 166, 35, 0.3);
+        border-radius: 12px;
+        padding: 15px;
+        margin-top: 20px;
+    }
+
+    .bonuses-summary h3 {
+        color: #f5a623;
+        font-size: 1rem;
+        margin-bottom: 12px;
+        display: flex;
+        align-items: center;
+        gap: 8px;
+    }
+
+    .bonus-grid {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 10px;
+    }
+
+    .bonus-item {
+        background: rgba(0, 0, 0, 0.3);
+        padding: 10px;
+        border-radius: 8px;
+    }
+
+    .bonus-label {
+        font-size: 0.75rem;
+        color: #888;
+        margin-bottom: 3px;
+    }
+
+    .bonus-value {
+        font-size: 1rem;
+        font-weight: bold;
+        color: #f5a623;
+    }
+
+    .bonus-value.neutral {
+        color: #666;
+    }
+
+    .businesses {
+        margin-bottom: 30px;
+    }
+
+    .business-card {
+        background: rgba(255, 255, 255, 0.03);
+        border: 1px solid rgba(255, 255, 255, 0.08);
+        border-radius: 12px;
+        padding: 15px;
+        margin-bottom: 15px;
+        display: flex;
+        align-items: center;
+        gap: 15px;
+    }
+
+    .business-card.locked {
+        opacity: 0.5;
+        background: rgba(0, 0, 0, 0.3);
+        border: 1px dashed rgba(255, 255, 255, 0.15);
+    }
+
+    .business-card.locked .business-icon {
+        filter: grayscale(1);
+    }
+
+    .lock-info {
+        font-size: 0.8rem;
+        color: #f5a623;
+        margin-top: 5px;
+    }
+
+    .lock-info.prestige-lock {
+        color: #ff6b6b;
+    }
+
+    .business-icon {
+        width: 60px;
+        height: 60px;
+        background: rgba(245, 166, 35, 0.15);
+        border-radius: 10px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 1.8rem;
+    }
+
+    .business-info {
+        flex: 1;
+    }
+
+    .business-name {
+        font-size: 1.1rem;
+        font-weight: bold;
+        margin-bottom: 5px;
+    }
+
+    .business-stats {
+        font-size: 0.85rem;
+        color: #888;
+    }
+
+    .business-stats span {
+        color: #f5a623;
+    }
+
+    .buy-btn {
+        background: linear-gradient(135deg, #f5a623 0%, #e08e0b 100%);
+        border: none;
+        color: #1c1c1e;
+        padding: 12px 20px;
+        border-radius: 8px;
+        cursor: pointer;
+        font-weight: bold;
+        transition: transform 0.1s, opacity 0.2s;
+        min-width: 100px;
+    }
+
+    .buy-btn:hover:not(:disabled) {
+        transform: scale(1.05);
+    }
+
+    .buy-btn:disabled {
+        opacity: 0.4;
+        cursor: not-allowed;
+    }
+
+    .prestige-section {
+        background: linear-gradient(135deg, rgba(245, 166, 35, 0.1) 0%, rgba(224, 142, 11, 0.1) 100%);
+        border: 1px solid rgba(245, 166, 35, 0.3);
+        border-radius: 12px;
+        padding: 20px;
+        text-align: center;
+        margin-top: 20px;
+    }
+
+    .upgrades {
+        margin-bottom: 30px;
+    }
+
+    .upgrade-card {
+        background: rgba(245, 166, 35, 0.05);
+        border: 1px solid rgba(245, 166, 35, 0.2);
+        border-radius: 12px;
+        padding: 15px;
+        margin-bottom: 12px;
+        display: flex;
+        align-items: center;
+        gap: 15px;
+    }
+
+    .upgrade-card.purchased {
+        opacity: 0.6;
+        background: rgba(76, 175, 80, 0.1);
+        border-color: rgba(76, 175, 80, 0.3);
+    }
+
+    .upgrade-card.locked {
+        opacity: 0.4;
+        background: rgba(0, 0, 0, 0.3);
+        border: 1px dashed rgba(255, 255, 255, 0.15);
+    }
+
+    .upgrade-icon {
+        width: 50px;
+        height: 50px;
+        background: rgba(245, 166, 35, 0.15);
+        border-radius: 10px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 1.5rem;
+    }
+
+    .upgrade-card.purchased .upgrade-icon {
+        background: rgba(76, 175, 80, 0.2);
+    }
+
+    .upgrade-info {
+        flex: 1;
+    }
+
+    .upgrade-name {
+        font-size: 1rem;
+        font-weight: bold;
+        margin-bottom: 3px;
+    }
+
+    .upgrade-effect {
+        font-size: 0.8rem;
+        color: #f5a623;
+    }
+
+    .upgrade-type {
+        font-size: 0.7rem;
+        color: #666;
+        text-transform: uppercase;
+        margin-top: 2px;
+    }
+
+    .upgrade-btn {
+        background: linear-gradient(135deg, #f5a623 0%, #e08e0b 100%);
+        border: none;
+        color: #1c1c1e;
+        padding: 10px 15px;
+        border-radius: 8px;
+        cursor: pointer;
+        font-weight: bold;
+        font-size: 0.85rem;
+        transition: transform 0.1s, opacity 0.2s;
+        min-width: 90px;
+    }
+
+    .upgrade-btn:hover:not(:disabled) {
+        transform: scale(1.05);
+    }
+
+    .upgrade-btn:disabled {
+        opacity: 0.4;
+        cursor: not-allowed;
+    }
+
+    .upgrade-btn.purchased {
+        background: linear-gradient(135deg, #4caf50 0%, #388e3c 100%);
+    }
+
+    .prestige-section h2 {
+        color: #f5a623;
+        margin-bottom: 10px;
+    }
+
+    .prestige-section p {
+        color: #aaa;
+        margin-bottom: 15px;
+        font-size: 0.9rem;
+    }
+
+    .prestige-btn {
+        background: linear-gradient(135deg, #f5a623 0%, #e08e0b 100%);
+        border: none;
+        color: #1c1c1e;
+        padding: 15px 30px;
+        border-radius: 8px;
+        cursor: pointer;
+        font-weight: bold;
+        font-size: 1.1rem;
+        transition: transform 0.1s;
+    }
+
+    .prestige-btn:hover:not(:disabled) {
+        transform: scale(1.05);
+    }
+
+    .prestige-btn:disabled {
+        opacity: 0.4;
+        cursor: not-allowed;
+    }
+
+    .offline-modal {
+        display: none;
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: rgba(0, 0, 0, 0.8);
+        justify-content: center;
+        align-items: center;
+        z-index: 1000;
+    }
+
+    .offline-modal.show {
+        display: flex;
+    }
+
+    .offline-content {
+        background: #1c1c1e;
+        border: 2px solid #f5a623;
+        border-radius: 15px;
+        padding: 30px;
+        text-align: center;
+        max-width: 400px;
+    }
+
+    .offline-content h2 {
+        color: #f5a623;
+        margin-bottom: 15px;
+    }
+
+    .offline-amount {
+        font-size: 2rem;
+        color: #f5a623;
+        margin: 20px 0;
+    }
+
+    .offline-btn {
+        background: #f5a623;
+        border: none;
+        color: #1c1c1e;
+        padding: 12px 30px;
+        border-radius: 8px;
+        cursor: pointer;
+        font-weight: bold;
+        font-size: 1rem;
+    }
+
+    .click-feedback {
+        position: fixed;
+        pointer-events: none;
+        font-weight: bold;
+        color: #f5a623;
+        font-size: 1.2rem;
+        animation: floatUp 0.8s ease-out forwards;
+        z-index: 100;
+    }
+
+    /* Business Scene Modal */
+    .scene-modal {
+        display: none;
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: rgba(0, 0, 0, 0.95);
+        z-index: 1000;
+        flex-direction: column;
+    }
+
+    .scene-modal.show {
+        display: flex;
+    }
+
+    .scene-background {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-size: cover;
+        background-position: center;
+        opacity: 0.7;
+    }
+
+    .scene-overlay {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: linear-gradient(to bottom, 
+            rgba(0,0,0,0.3) 0%, 
+            rgba(0,0,0,0.1) 30%,
+            rgba(0,0,0,0.1) 70%,
+            rgba(0,0,0,0.8) 100%);
+    }
+
+    .scene-content {
+        position: relative;
+        z-index: 10;
+        display: flex;
+        flex-direction: column;
+        height: 100%;
+        padding: 20px;
+    }
+
+    .scene-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 20px;
+    }
+
+    .scene-title {
+        font-size: 1.8rem;
+        font-weight: bold;
+        color: #f5a623;
+        text-shadow: 0 2px 10px rgba(0,0,0,0.8);
+    }
+
+    .scene-close {
+        background: rgba(255,255,255,0.1);
+        border: 1px solid rgba(255,255,255,0.3);
+        color: white;
+        width: 44px;
+        height: 44px;
+        border-radius: 50%;
+        font-size: 1.5rem;
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .scene-stats {
+        margin-top: auto;
+        background: rgba(0,0,0,0.7);
+        border-radius: 12px;
+        padding: 20px;
+    }
+
+    .scene-stat-row {
+        display: flex;
+        justify-content: space-between;
+        margin-bottom: 10px;
+        font-size: 1.1rem;
+    }
+
+    .scene-stat-label {
+        color: #888;
+    }
+
+    .scene-stat-value {
+        color: #f5a623;
+        font-weight: bold;
+    }
+
+    .scene-buy-btn {
+        width: 100%;
+        background: linear-gradient(135deg, #f5a623 0%, #e08e0b 100%);
+        border: none;
+        color: #1c1c1e;
+        padding: 15px;
+        border-radius: 10px;
+        font-size: 1.2rem;
+        font-weight: bold;
+        cursor: pointer;
+        margin-top: 15px;
+    }
+
+    .scene-buy-btn:disabled {
+        opacity: 0.4;
+        cursor: not-allowed;
+    }
+
+    .business-card.has-scene {
+        cursor: pointer;
+        transition: transform 0.2s, box-shadow 0.2s;
+    }
+
+    .business-card.has-scene:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 4px 15px rgba(245, 166, 35, 0.2);
+    }
+
+    @keyframes floatUp {
+        0% {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        100% {
+            opacity: 0;
+            transform: translateY(-50px);
+        }
+    }
+</style>
+```
 
-        .upgrade-btn {
-            background: linear-gradient(135deg, #f5a623 0%, #e08e0b 100%);
-            border: none;
-            color: #1c1c1e;
-            padding: 10px 15px;
-            border-radius: 8px;
-            cursor: pointer;
-            font-weight: bold;
-            font-size: 0.85rem;
-            transition: transform 0.1s, opacity 0.2s;
-            min-width: 90px;
-        }
-
-        .upgrade-btn:hover:not(:disabled) {
-            transform: scale(1.05);
-        }
-
-        .upgrade-btn:disabled {
-            opacity: 0.4;
-            cursor: not-allowed;
-        }
-
-        .upgrade-btn.purchased {
-            background: linear-gradient(135deg, #4caf50 0%, #388e3c 100%);
-        }
-
-        .prestige-section h2 {
-            color: #f5a623;
-            margin-bottom: 10px;
-        }
-
-        .prestige-section p {
-            color: #aaa;
-            margin-bottom: 15px;
-            font-size: 0.9rem;
-        }
-
-        .prestige-btn {
-            background: linear-gradient(135deg, #f5a623 0%, #e08e0b 100%);
-            border: none;
-            color: #1c1c1e;
-            padding: 15px 30px;
-            border-radius: 8px;
-            cursor: pointer;
-            font-weight: bold;
-            font-size: 1.1rem;
-            transition: transform 0.1s;
-        }
-
-        .prestige-btn:hover:not(:disabled) {
-            transform: scale(1.05);
-        }
-
-        .prestige-btn:disabled {
-            opacity: 0.4;
-            cursor: not-allowed;
-        }
-
-        .offline-modal {
-            display: none;
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(0, 0, 0, 0.8);
-            justify-content: center;
-            align-items: center;
-            z-index: 1000;
-        }
-
-        .offline-modal.show {
-            display: flex;
-        }
-
-        .offline-content {
-            background: #1c1c1e;
-            border: 2px solid #f5a623;
-            border-radius: 15px;
-            padding: 30px;
-            text-align: center;
-            max-width: 400px;
-        }
-
-        .offline-content h2 {
-            color: #f5a623;
-            margin-bottom: 15px;
-        }
-
-        .offline-amount {
-            font-size: 2rem;
-            color: #f5a623;
-            margin: 20px 0;
-        }
-
-        .offline-btn {
-            background: #f5a623;
-            border: none;
-            color: #1c1c1e;
-            padding: 12px 30px;
-            border-radius: 8px;
-            cursor: pointer;
-            font-weight: bold;
-            font-size: 1rem;
-        }
-
-        .click-feedback {
-            position: fixed;
-            pointer-events: none;
-            font-weight: bold;
-            color: #f5a623;
-            font-size: 1.2rem;
-            animation: floatUp 0.8s ease-out forwards;
-            z-index: 100;
-        }
-
-        @keyframes floatUp {
-            0% {
-                opacity: 1;
-                transform: translateY(0);
-            }
-            100% {
-                opacity: 0;
-                transform: translateY(-50px);
-            }
-        }
-    </style>
 </head>
 <body>
     <div class="container">
         <h1>💼 Business Empire</h1>
+
+```
+    <div class="money-display">
+        <div class="money-amount">$<span id="money">0</span></div>
+        <div class="income-rate">$<span id="income-rate">0</span>/sec</div>
+        <div class="prestige-info">
+            Prestige Level: <span id="prestige-level">0</span> | 
+            Multiplier: <span id="prestige-mult">1.0</span>x
+        </div>
+    </div>
+
+    <div class="work-section">
+        <button class="work-btn" id="work-btn">💪 WORK</button>
+        <p style="margin-top: 10px; color: #888; font-size: 0.9rem;">
+            +$<span id="click-power">1</span> per click
+        </p>
+    </div>
+
+    <div class="tabs">
+        <button class="tab-btn active" data-tab="businesses">🏢 Businesses</button>
+        <button class="tab-btn" data-tab="upgrades">⬆️ Upgrades</button>
+    </div>
+
+    <div class="tab-content active" id="tab-businesses">
+        <div id="business-list"></div>
+    </div>
+
+    <div class="tab-content" id="tab-upgrades">
+        <div id="upgrade-list"></div>
         
-        <div class="money-display">
-            <div class="money-amount">$<span id="money">0</span></div>
-            <div class="income-rate">$<span id="income-rate">0</span>/sec</div>
-            <div class="prestige-info">
-                Prestige Level: <span id="prestige-level">0</span> | 
-                Multiplier: <span id="prestige-mult">1.0</span>x
-            </div>
-        </div>
-
-        <div class="work-section">
-            <button class="work-btn" id="work-btn">💪 WORK</button>
-            <p style="margin-top: 10px; color: #888; font-size: 0.9rem;">
-                +$<span id="click-power">1</span> per click
-            </p>
-        </div>
-
-        <div class="tabs">
-            <button class="tab-btn active" data-tab="businesses">🏢 Businesses</button>
-            <button class="tab-btn" data-tab="upgrades">⬆️ Upgrades</button>
-        </div>
-
-        <div class="tab-content active" id="tab-businesses">
-            <div id="business-list"></div>
-        </div>
-
-        <div class="tab-content" id="tab-upgrades">
-            <div id="upgrade-list"></div>
-            
-            <div class="bonuses-summary">
-                <h3>📊 Active Bonuses</h3>
-                <div class="bonus-grid">
-                    <div class="bonus-item">
-                        <div class="bonus-label">Bonus Income</div>
-                        <div class="bonus-value" id="bonus-income">+$0/sec</div>
-                    </div>
-                    <div class="bonus-item">
-                        <div class="bonus-label">Global Multiplier</div>
-                        <div class="bonus-value" id="bonus-global">x1.00</div>
-                    </div>
-                    <div class="bonus-item">
-                        <div class="bonus-label">Click Multiplier</div>
-                        <div class="bonus-value" id="bonus-click">x1.00</div>
-                    </div>
-                    <div class="bonus-item">
-                        <div class="bonus-label">Offline Bonus</div>
-                        <div class="bonus-value" id="bonus-offline">x1.00</div>
-                    </div>
-                    <div class="bonus-item">
-                        <div class="bonus-label">Click Power</div>
-                        <div class="bonus-value" id="bonus-clickpower">$1</div>
-                    </div>
-                    <div class="bonus-item">
-                        <div class="bonus-label">Auto-Click</div>
-                        <div class="bonus-value" id="bonus-autoclick">Off</div>
-                    </div>
+        <div class="bonuses-summary">
+            <h3>📊 Active Bonuses</h3>
+            <div class="bonus-grid">
+                <div class="bonus-item">
+                    <div class="bonus-label">Bonus Income</div>
+                    <div class="bonus-value" id="bonus-income">+$0/sec</div>
+                </div>
+                <div class="bonus-item">
+                    <div class="bonus-label">Global Multiplier</div>
+                    <div class="bonus-value" id="bonus-global">x1.00</div>
+                </div>
+                <div class="bonus-item">
+                    <div class="bonus-label">Click Multiplier</div>
+                    <div class="bonus-value" id="bonus-click">x1.00</div>
+                </div>
+                <div class="bonus-item">
+                    <div class="bonus-label">Offline Bonus</div>
+                    <div class="bonus-value" id="bonus-offline">x1.00</div>
+                </div>
+                <div class="bonus-item">
+                    <div class="bonus-label">Click Power</div>
+                    <div class="bonus-value" id="bonus-clickpower">$1</div>
+                </div>
+                <div class="bonus-item">
+                    <div class="bonus-label">Auto-Click</div>
+                    <div class="bonus-value" id="bonus-autoclick">Off</div>
                 </div>
             </div>
         </div>
-
-        <div class="prestige-section">
-            <h2>⭐ Prestige</h2>
-            <p>Reset your progress for a permanent income multiplier.<br>
-            Requires $1,000,000 total earned.</p>
-            <p>Total Earned: $<span id="total-earned">0</span></p>
-            <button class="prestige-btn" id="prestige-btn" disabled>PRESTIGE (+0.5x)</button>
-        </div>
     </div>
 
-    <div class="offline-modal" id="offline-modal">
-        <div class="offline-content">
-            <h2>Welcome Back!</h2>
-            <p>While you were away, your businesses earned:</p>
-            <div class="offline-amount">$<span id="offline-earnings">0</span></div>
-            <button class="offline-btn" id="collect-btn">Collect</button>
+    <div class="prestige-section">
+        <h2>⭐ Prestige</h2>
+        <p>Reset your progress for a permanent income multiplier.<br>
+        Requires $1,000,000 total earned.</p>
+        <p>Total Earned: $<span id="total-earned">0</span></p>
+        <button class="prestige-btn" id="prestige-btn" disabled>PRESTIGE (+0.5x)</button>
+    </div>
+</div>
+
+<div class="offline-modal" id="offline-modal">
+    <div class="offline-content">
+        <h2>Welcome Back!</h2>
+        <p>While you were away, your businesses earned:</p>
+        <div class="offline-amount">$<span id="offline-earnings">0</span></div>
+        <button class="offline-btn" id="collect-btn">Collect</button>
+    </div>
+</div>
+
+<!-- Business Scene Modal -->
+<div class="scene-modal" id="scene-modal">
+    <div class="scene-background" id="scene-bg"></div>
+    <div class="scene-overlay"></div>
+    <div class="scene-content">
+        <div class="scene-header">
+            <div class="scene-title" id="scene-title">Business Name</div>
+            <button class="scene-close" id="scene-close">✕</button>
+        </div>
+        <div class="scene-stats">
+            <div class="scene-stat-row">
+                <span class="scene-stat-label">Owned</span>
+                <span class="scene-stat-value" id="scene-owned">0</span>
+            </div>
+            <div class="scene-stat-row">
+                <span class="scene-stat-label">Income per unit</span>
+                <span class="scene-stat-value" id="scene-income">$0/sec</span>
+            </div>
+            <div class="scene-stat-row">
+                <span class="scene-stat-label">Total income</span>
+                <span class="scene-stat-value" id="scene-total">$0/sec</span>
+            </div>
+            <button class="scene-buy-btn" id="scene-buy">Buy — $0</button>
         </div>
     </div>
+</div>
 
-    <script>
-        const STORAGE_KEY = 'businessEmpireIdle';
-        const MAX_OFFLINE_SECONDS = 8 * 60 * 60;
-        const PRESTIGE_THRESHOLD = 1000000;
+<script>
+    const STORAGE_KEY = 'businessEmpireIdle';
+    const MAX_OFFLINE_SECONDS = 8 * 60 * 60;
+    const PRESTIGE_THRESHOLD = 1000000;
 
-        const DEFAULT_UPGRADES = [
-            // EARLY GAME (1-10)
-            {
-                id: 'better_tools',
-                name: 'Better Tools',
-                icon: '🔧',
-                effect: '+1$/sec passive income',
-                type: 'income',
-                cost: 25,
-                unlockCost: 0,
-                unlockPrestige: 0,
-                purchased: false,
-                apply: (state) => { state.bonusIncome = (state.bonusIncome || 0) + 1; }
-            },
-            {
-                id: 'second_worker',
-                name: 'Second Worker',
-                icon: '👷',
-                effect: '+2$/sec passive income',
-                type: 'income',
-                cost: 75,
-                unlockCost: 50,
-                unlockPrestige: 0,
-                purchased: false,
-                apply: (state) => { state.bonusIncome = (state.bonusIncome || 0) + 2; }
-            },
-            {
-                id: 'basic_advertising',
-                name: 'Basic Advertising',
-                icon: '📢',
-                effect: '+10% global income',
-                type: 'multiplier',
-                cost: 150,
-                unlockCost: 100,
-                unlockPrestige: 0,
-                purchased: false,
-                apply: (state) => { state.globalMultiplier = (state.globalMultiplier || 1) * 1.10; }
-            },
-            {
-                id: 'coffee_upgrade',
-                name: 'Coffee Machine Upgrade',
-                icon: '☕',
-                effect: 'Coffee Shop x2 income',
-                type: 'multiplier',
-                cost: 300,
-                unlockCost: 200,
-                unlockPrestige: 0,
-                purchased: false,
-                apply: (state) => {
-                    const coffee = state.businesses.find(b => b.id === 'coffee');
-                    if (coffee) coffee.incomeMultiplier *= 2;
-                }
-            },
-            {
-                id: 'faster_hands',
-                name: 'Faster Hands',
-                icon: '✋',
-                effect: '+1 click power',
-                type: 'utility',
-                cost: 200,
-                unlockCost: 150,
-                unlockPrestige: 0,
-                purchased: false,
-                apply: (state) => { state.clickPower += 1; }
-            },
-            {
-                id: 'cash_register',
-                name: 'Cash Register Upgrade',
-                icon: '💵',
-                effect: '+5$/sec passive income',
-                type: 'income',
-                cost: 500,
-                unlockCost: 300,
-                unlockPrestige: 0,
-                purchased: false,
-                apply: (state) => { state.bonusIncome = (state.bonusIncome || 0) + 5; }
-            },
-            {
-                id: 'bulk_supplies',
-                name: 'Bulk Supplies',
-                icon: '📦',
-                effect: 'Early businesses +15% income',
-                type: 'multiplier',
-                cost: 750,
-                unlockCost: 500,
-                unlockPrestige: 0,
-                purchased: false,
-                apply: (state) => {
-                    ['lemonade', 'coffee', 'restaurant', 'delivery'].forEach(id => {
-                        const b = state.businesses.find(x => x.id === id);
-                        if (b) b.incomeMultiplier *= 1.15;
-                    });
-                }
-            },
-            {
-                id: 'part_time_manager',
-                name: 'Part-Time Manager',
-                icon: '👔',
-                effect: 'Auto-click every 2 seconds',
-                type: 'utility',
-                cost: 1000,
-                unlockCost: 750,
-                unlockPrestige: 0,
-                purchased: false,
-                apply: (state) => { state.autoClickInterval = 2000; }
-            },
-            {
-                id: 'extended_hours',
-                name: 'Extended Working Hours',
-                icon: '🕐',
-                effect: '+20% click income',
-                type: 'multiplier',
-                cost: 1500,
-                unlockCost: 1000,
-                unlockPrestige: 0,
-                purchased: false,
-                apply: (state) => { state.clickMultiplier = (state.clickMultiplier || 1) * 1.20; }
-            },
-            {
-                id: 'storage_room',
-                name: 'Small Storage Room',
-                icon: '🏠',
-                effect: '+10% offline income',
-                type: 'utility',
-                cost: 2000,
-                unlockCost: 1500,
-                unlockPrestige: 0,
-                purchased: false,
-                apply: (state) => { state.offlineMultiplier = (state.offlineMultiplier || 1) * 1.10; }
+    const DEFAULT_UPGRADES = [
+        // EARLY GAME (1-10)
+        {
+            id: 'better_tools',
+            name: 'Better Tools',
+            icon: '🔧',
+            effect: '+1$/sec passive income',
+            type: 'income',
+            cost: 25,
+            unlockCost: 0,
+            unlockPrestige: 0,
+            purchased: false,
+            apply: (state) => { state.bonusIncome = (state.bonusIncome || 0) + 1; }
+        },
+        {
+            id: 'second_worker',
+            name: 'Second Worker',
+            icon: '👷',
+            effect: '+2$/sec passive income',
+            type: 'income',
+            cost: 75,
+            unlockCost: 50,
+            unlockPrestige: 0,
+            purchased: false,
+            apply: (state) => { state.bonusIncome = (state.bonusIncome || 0) + 2; }
+        },
+        {
+            id: 'basic_advertising',
+            name: 'Basic Advertising',
+            icon: '📢',
+            effect: '+10% global income',
+            type: 'multiplier',
+            cost: 150,
+            unlockCost: 100,
+            unlockPrestige: 0,
+            purchased: false,
+            apply: (state) => { state.globalMultiplier = (state.globalMultiplier || 1) * 1.10; }
+        },
+        {
+            id: 'coffee_upgrade',
+            name: 'Coffee Machine Upgrade',
+            icon: '☕',
+            effect: 'Coffee Shop x2 income',
+            type: 'multiplier',
+            cost: 300,
+            unlockCost: 200,
+            unlockPrestige: 0,
+            purchased: false,
+            apply: (state) => {
+                const coffee = state.businesses.find(b => b.id === 'coffee');
+                if (coffee) coffee.incomeMultiplier *= 2;
             }
-        ];
-
-        const DEFAULT_BUSINESSES = [
-            // EARLY GAME
-            {
-                id: 'lemonade',
-                name: 'Lemonade Stand',
-                icon: '🍋',
-                owned: 0,
-                baseCost: 10,
-                baseIncome: 1,
-                costMultiplier: 1.15,
-                incomeMultiplier: 1,
-                unlockCost: 0,
-                unlockPrestige: 0
-            },
-            {
-                id: 'coffee',
-                name: 'Coffee Shop',
-                icon: '☕',
-                owned: 0,
-                baseCost: 100,
-                baseIncome: 5,
-                costMultiplier: 1.15,
-                incomeMultiplier: 1,
-                unlockCost: 50,
-                unlockPrestige: 0
-            },
-            {
-                id: 'restaurant',
-                name: 'Small Restaurant',
-                icon: '🍽️',
-                owned: 0,
-                baseCost: 1000,
-                baseIncome: 25,
-                costMultiplier: 1.15,
-                incomeMultiplier: 1,
-                unlockCost: 500,
-                unlockPrestige: 0
-            },
-            {
-                id: 'delivery',
-                name: 'Food Delivery Service',
-                icon: '🛵',
-                owned: 0,
-                baseCost: 5000,
-                baseIncome: 100,
-                costMultiplier: 1.15,
-                incomeMultiplier: 1,
-                unlockCost: 2500,
-                unlockPrestige: 0
-            },
-            // MID GAME
-            {
-                id: 'fitness',
-                name: 'Fitness Club',
-                icon: '💪',
-                owned: 0,
-                baseCost: 10000,
-                baseIncome: 200,
-                costMultiplier: 1.15,
-                incomeMultiplier: 1,
-                unlockCost: 5000,
-                unlockPrestige: 0
-            },
-            {
-                id: 'carwash',
-                name: 'Car Wash Network',
-                icon: '🚗',
-                owned: 0,
-                baseCost: 25000,
-                baseIncome: 450,
-                costMultiplier: 1.15,
-                incomeMultiplier: 1,
-                unlockCost: 15000,
-                unlockPrestige: 0
-            },
-            {
-                id: 'itcompany',
-                name: 'IT Company',
-                icon: '💻',
-                owned: 0,
-                baseCost: 100000,
-                baseIncome: 1500,
-                costMultiplier: 1.15,
-                incomeMultiplier: 1,
-                unlockCost: 50000,
-                unlockPrestige: 0
-            },
-            {
-                id: 'media',
-                name: 'Media Agency',
-                icon: '📺',
-                owned: 0,
-                baseCost: 250000,
-                baseIncome: 3500,
-                costMultiplier: 1.15,
-                incomeMultiplier: 1,
-                unlockCost: 150000,
-                unlockPrestige: 0
-            },
-            // LATE GAME
-            {
-                id: 'bank',
-                name: 'Bank',
-                icon: '🏦',
-                owned: 0,
-                baseCost: 1000000,
-                baseIncome: 12000,
-                costMultiplier: 1.15,
-                incomeMultiplier: 1,
-                unlockCost: 500000,
-                unlockPrestige: 1
-            },
-            {
-                id: 'realestate',
-                name: 'Real Estate Holding',
-                icon: '🏢',
-                owned: 0,
-                baseCost: 5000000,
-                baseIncome: 50000,
-                costMultiplier: 1.15,
-                incomeMultiplier: 1,
-                unlockCost: 2500000,
-                unlockPrestige: 1
-            },
-            {
-                id: 'investment',
-                name: 'Private Investment Fund',
-                icon: '📈',
-                owned: 0,
-                baseCost: 10000000,
-                baseIncome: 90000,
-                costMultiplier: 1.15,
-                incomeMultiplier: 1,
-                unlockCost: 5000000,
-                unlockPrestige: 1
-            },
-            // ENDGAME
-            {
-                id: 'spacemining',
-                name: 'Space Mining Corporation',
-                icon: '🚀',
-                owned: 0,
-                baseCost: 50000000,
-                baseIncome: 400000,
-                costMultiplier: 1.15,
-                incomeMultiplier: 1,
-                unlockCost: 25000000,
-                unlockPrestige: 2
-            },
-            {
-                id: 'interplanetary',
-                name: 'Interplanetary Trade Network',
-                icon: '🌌',
-                owned: 0,
-                baseCost: 250000000,
-                baseIncome: 1800000,
-                costMultiplier: 1.15,
-                incomeMultiplier: 1,
-                unlockCost: 100000000,
-                unlockPrestige: 2
-            }
-        ];
-
-        let gameState = {
-            money: 0,
-            totalEarned: 0,
-            clickPower: 1,
-            clickMultiplier: 1,
-            globalMultiplier: 1,
-            bonusIncome: 0,
-            offlineMultiplier: 1,
-            autoClickInterval: 0,
-            prestigeLevel: 0,
-            prestigeMultiplier: 1,
-            lastSaved: Date.now(),
-            businesses: JSON.parse(JSON.stringify(DEFAULT_BUSINESSES)),
-            upgrades: JSON.parse(JSON.stringify(DEFAULT_UPGRADES))
-        };
-
-        let autoClickTimer = null;
-
-        function formatNumber(num) {
-            if (num >= 1e12) return (num / 1e12).toFixed(2) + 'T';
-            if (num >= 1e9) return (num / 1e9).toFixed(2) + 'B';
-            if (num >= 1e6) return (num / 1e6).toFixed(2) + 'M';
-            if (num >= 1e3) return (num / 1e3).toFixed(2) + 'K';
-            return Math.floor(num).toLocaleString();
-        }
-
-        function getBusinessCost(business) {
-            return Math.floor(business.baseCost * Math.pow(business.costMultiplier, business.owned));
-        }
-
-        function getBusinessIncome(business) {
-            return business.baseIncome * business.owned * business.incomeMultiplier * gameState.prestigeMultiplier;
-        }
-
-        function getTotalIncomePerSecond() {
-            const businessIncome = gameState.businesses.reduce((sum, b) => sum + getBusinessIncome(b), 0);
-            return (businessIncome + gameState.bonusIncome) * gameState.globalMultiplier;
-        }
-
-        function saveGame() {
-            gameState.lastSaved = Date.now();
-            localStorage.setItem(STORAGE_KEY, JSON.stringify(gameState));
-        }
-
-        function loadGame() {
-            const saved = localStorage.getItem(STORAGE_KEY);
-            if (saved) {
-                const parsed = JSON.parse(saved);
-                gameState = { ...gameState, ...parsed };
-                
-                if (!gameState.businesses || gameState.businesses.length === 0) {
-                    gameState.businesses = JSON.parse(JSON.stringify(DEFAULT_BUSINESSES));
-                }
-                
-                if (!gameState.upgrades || gameState.upgrades.length === 0) {
-                    gameState.upgrades = JSON.parse(JSON.stringify(DEFAULT_UPGRADES));
-                }
-                
-                // Reapply purchased upgrades
-                gameState.upgrades.forEach((upgrade, index) => {
-                    if (upgrade.purchased) {
-                        const defaultUpgrade = DEFAULT_UPGRADES[index];
-                        if (defaultUpgrade && defaultUpgrade.apply) {
-                            defaultUpgrade.apply(gameState);
-                        }
-                    }
+        },
+        {
+            id: 'faster_hands',
+            name: 'Faster Hands',
+            icon: '✋',
+            effect: '+1 click power',
+            type: 'utility',
+            cost: 200,
+            unlockCost: 150,
+            unlockPrestige: 0,
+            purchased: false,
+            apply: (state) => { state.clickPower += 1; }
+        },
+        {
+            id: 'cash_register',
+            name: 'Cash Register Upgrade',
+            icon: '💵',
+            effect: '+5$/sec passive income',
+            type: 'income',
+            cost: 500,
+            unlockCost: 300,
+            unlockPrestige: 0,
+            purchased: false,
+            apply: (state) => { state.bonusIncome = (state.bonusIncome || 0) + 5; }
+        },
+        {
+            id: 'bulk_supplies',
+            name: 'Bulk Supplies',
+            icon: '📦',
+            effect: 'Early businesses +15% income',
+            type: 'multiplier',
+            cost: 750,
+            unlockCost: 500,
+            unlockPrestige: 0,
+            purchased: false,
+            apply: (state) => {
+                ['lemonade', 'coffee', 'restaurant', 'delivery'].forEach(id => {
+                    const b = state.businesses.find(x => x.id === id);
+                    if (b) b.incomeMultiplier *= 1.15;
                 });
+            }
+        },
+        {
+            id: 'part_time_manager',
+            name: 'Part-Time Manager',
+            icon: '👔',
+            effect: 'Auto-click every 2 seconds',
+            type: 'utility',
+            cost: 1000,
+            unlockCost: 750,
+            unlockPrestige: 0,
+            purchased: false,
+            apply: (state) => { state.autoClickInterval = 2000; }
+        },
+        {
+            id: 'extended_hours',
+            name: 'Extended Working Hours',
+            icon: '🕐',
+            effect: '+20% click income',
+            type: 'multiplier',
+            cost: 1500,
+            unlockCost: 1000,
+            unlockPrestige: 0,
+            purchased: false,
+            apply: (state) => { state.clickMultiplier = (state.clickMultiplier || 1) * 1.20; }
+        },
+        {
+            id: 'storage_room',
+            name: 'Small Storage Room',
+            icon: '🏠',
+            effect: '+10% offline income',
+            type: 'utility',
+            cost: 2000,
+            unlockCost: 1500,
+            unlockPrestige: 0,
+            purchased: false,
+            apply: (state) => { state.offlineMultiplier = (state.offlineMultiplier || 1) * 1.10; }
+        }
+    ];
+
+    const DEFAULT_BUSINESSES = [
+        // EARLY GAME
+        {
+            id: 'lemonade',
+            name: 'Lemonade Stand',
+            icon: '🍋',
+            owned: 0,
+            baseCost: 10,
+            baseIncome: 1,
+            costMultiplier: 1.15,
+            incomeMultiplier: 1,
+            unlockCost: 0,
+            unlockPrestige: 0,
+            // Placeholder - replace with your MidJourney image URL
+            sceneUrl: 'https://github.com/sashko1391/business_empire_idle/blob/f2d2b678dc95768340030d168de0697d4a39a784/images/lemonade_1.png'
+        },
+        {
+            id: 'coffee',
+            name: 'Coffee Shop',
+            icon: '☕',
+            owned: 0,
+            baseCost: 100,
+            baseIncome: 5,
+            costMultiplier: 1.15,
+            incomeMultiplier: 1,
+            unlockCost: 50,
+            unlockPrestige: 0,
+            // Placeholder - replace with your MidJourney image URL
+            sceneUrl: 'https://github.com/sashko1391/business_empire_idle/blob/f2d2b678dc95768340030d168de0697d4a39a784/images/coffee_1.png'
+        },
+        {
+            id: 'restaurant',
+            name: 'Small Restaurant',
+            icon: '🍽️',
+            owned: 0,
+            baseCost: 1000,
+            baseIncome: 25,
+            costMultiplier: 1.15,
+            incomeMultiplier: 1,
+            unlockCost: 500,
+            unlockPrestige: 0
+        },
+        {
+            id: 'delivery',
+            name: 'Food Delivery Service',
+            icon: '🛵',
+            owned: 0,
+            baseCost: 5000,
+            baseIncome: 100,
+            costMultiplier: 1.15,
+            incomeMultiplier: 1,
+            unlockCost: 2500,
+            unlockPrestige: 0
+        },
+        // MID GAME
+        {
+            id: 'fitness',
+            name: 'Fitness Club',
+            icon: '💪',
+            owned: 0,
+            baseCost: 10000,
+            baseIncome: 200,
+            costMultiplier: 1.15,
+            incomeMultiplier: 1,
+            unlockCost: 5000,
+            unlockPrestige: 0
+        },
+        {
+            id: 'carwash',
+            name: 'Car Wash Network',
+            icon: '🚗',
+            owned: 0,
+            baseCost: 25000,
+            baseIncome: 450,
+            costMultiplier: 1.15,
+            incomeMultiplier: 1,
+            unlockCost: 15000,
+            unlockPrestige: 0
+        },
+        {
+            id: 'itcompany',
+            name: 'IT Company',
+            icon: '💻',
+            owned: 0,
+            baseCost: 100000,
+            baseIncome: 1500,
+            costMultiplier: 1.15,
+            incomeMultiplier: 1,
+            unlockCost: 50000,
+            unlockPrestige: 0
+        },
+        {
+            id: 'media',
+            name: 'Media Agency',
+            icon: '📺',
+            owned: 0,
+            baseCost: 250000,
+            baseIncome: 3500,
+            costMultiplier: 1.15,
+            incomeMultiplier: 1,
+            unlockCost: 150000,
+            unlockPrestige: 0
+        },
+        // LATE GAME
+        {
+            id: 'bank',
+            name: 'Bank',
+            icon: '🏦',
+            owned: 0,
+            baseCost: 1000000,
+            baseIncome: 12000,
+            costMultiplier: 1.15,
+            incomeMultiplier: 1,
+            unlockCost: 500000,
+            unlockPrestige: 1
+        },
+        {
+            id: 'realestate',
+            name: 'Real Estate Holding',
+            icon: '🏢',
+            owned: 0,
+            baseCost: 5000000,
+            baseIncome: 50000,
+            costMultiplier: 1.15,
+            incomeMultiplier: 1,
+            unlockCost: 2500000,
+            unlockPrestige: 1
+        },
+        {
+            id: 'investment',
+            name: 'Private Investment Fund',
+            icon: '📈',
+            owned: 0,
+            baseCost: 10000000,
+            baseIncome: 90000,
+            costMultiplier: 1.15,
+            incomeMultiplier: 1,
+            unlockCost: 5000000,
+            unlockPrestige: 1
+        },
+        // ENDGAME
+        {
+            id: 'spacemining',
+            name: 'Space Mining Corporation',
+            icon: '🚀',
+            owned: 0,
+            baseCost: 50000000,
+            baseIncome: 400000,
+            costMultiplier: 1.15,
+            incomeMultiplier: 1,
+            unlockCost: 25000000,
+            unlockPrestige: 2
+        },
+        {
+            id: 'interplanetary',
+            name: 'Interplanetary Trade Network',
+            icon: '🌌',
+            owned: 0,
+            baseCost: 250000000,
+            baseIncome: 1800000,
+            costMultiplier: 1.15,
+            incomeMultiplier: 1,
+            unlockCost: 100000000,
+            unlockPrestige: 2
+        }
+    ];
+
+    let gameState = {
+        money: 0,
+        totalEarned: 0,
+        clickPower: 1,
+        clickMultiplier: 1,
+        globalMultiplier: 1,
+        bonusIncome: 0,
+        offlineMultiplier: 1,
+        autoClickInterval: 0,
+        prestigeLevel: 0,
+        prestigeMultiplier: 1,
+        lastSaved: Date.now(),
+        businesses: JSON.parse(JSON.stringify(DEFAULT_BUSINESSES)),
+        upgrades: JSON.parse(JSON.stringify(DEFAULT_UPGRADES)),
+        stats: {
+            firstPlayed: null,
+            totalPlayTime: 0,
+            sessionStart: null,
+            sessionCount: 0,
+            firstPrestigeTime: null,
+            prestigeCount: 0,
+            highestBusinessId: 'lemonade',
+            milestones: {}
+        }
+    };
+
+    let autoClickTimer = null;
+    
+    const STATS_KEY = 'businessEmpireStats';
+
+    function formatNumber(num) {
+        if (num >= 1e12) return (num / 1e12).toFixed(2) + 'T';
+        if (num >= 1e9) return (num / 1e9).toFixed(2) + 'B';
+        if (num >= 1e6) return (num / 1e6).toFixed(2) + 'M';
+        if (num >= 1e3) return (num / 1e3).toFixed(2) + 'K';
+        return Math.floor(num).toLocaleString();
+    }
+
+    function getBusinessCost(business) {
+        return Math.floor(business.baseCost * Math.pow(business.costMultiplier, business.owned));
+    }
+
+    function getBusinessIncome(business) {
+        return business.baseIncome * business.owned * business.incomeMultiplier * gameState.prestigeMultiplier;
+    }
+
+    function getTotalIncomePerSecond() {
+        const businessIncome = gameState.businesses.reduce((sum, b) => sum + getBusinessIncome(b), 0);
+        return (businessIncome + gameState.bonusIncome) * gameState.globalMultiplier;
+    }
+
+    function saveGame() {
+        gameState.lastSaved = Date.now();
+        localStorage.setItem(STORAGE_KEY, JSON.stringify(gameState));
+    }
+
+    function loadGame() {
+        const saved = localStorage.getItem(STORAGE_KEY);
+        if (saved) {
+            const parsed = JSON.parse(saved);
+            gameState = { ...gameState, ...parsed };
+            
+            if (!gameState.businesses || gameState.businesses.length === 0) {
+                gameState.businesses = JSON.parse(JSON.stringify(DEFAULT_BUSINESSES));
+            }
+            
+            if (!gameState.upgrades || gameState.upgrades.length === 0) {
+                gameState.upgrades = JSON.parse(JSON.stringify(DEFAULT_UPGRADES));
+            }
+            
+            // Reapply purchased upgrades
+            gameState.upgrades.forEach((upgrade, index) => {
+                if (upgrade.purchased) {
+                    const defaultUpgrade = DEFAULT_UPGRADES[index];
+                    if (defaultUpgrade && defaultUpgrade.apply) {
+                        defaultUpgrade.apply(gameState);
+                    }
+                }
+            });
+            
+            setupAutoClick();
+            calculateOfflineProgress();
+        }
+    }
+
+    function setupAutoClick() {
+        if (autoClickTimer) {
+            clearInterval(autoClickTimer);
+            autoClickTimer = null;
+        }
+        if (gameState.autoClickInterval > 0) {
+            autoClickTimer = setInterval(() => {
+                const earnings = gameState.clickPower * gameState.prestigeMultiplier * gameState.clickMultiplier;
+                gameState.money += earnings;
+                gameState.totalEarned += earnings;
+                updateUI();
+            }, gameState.autoClickInterval);
+        }
+    }
+
+    function calculateOfflineProgress() {
+        const now = Date.now();
+        const elapsed = Math.floor((now - gameState.lastSaved) / 1000);
+        
+        if (elapsed > 10) {
+            const cappedSeconds = Math.min(elapsed, MAX_OFFLINE_SECONDS);
+            const incomePerSecond = getTotalIncomePerSecond();
+            const offlineEarnings = incomePerSecond * cappedSeconds * gameState.offlineMultiplier;
+            
+            if (offlineEarnings > 0) {
+                document.getElementById('offline-earnings').textContent = formatNumber(offlineEarnings);
+                document.getElementById('offline-modal').classList.add('show');
                 
-                setupAutoClick();
-                calculateOfflineProgress();
+                document.getElementById('collect-btn').onclick = () => {
+                    gameState.money += offlineEarnings;
+                    gameState.totalEarned += offlineEarnings;
+                    document.getElementById('offline-modal').classList.remove('show');
+                    updateUI();
+                    saveGame();
+                };
             }
         }
+    }
 
-        function setupAutoClick() {
+    function updateUI() {
+        document.getElementById('money').textContent = formatNumber(gameState.money);
+        document.getElementById('income-rate').textContent = formatNumber(getTotalIncomePerSecond());
+        document.getElementById('click-power').textContent = formatNumber(gameState.clickPower * gameState.prestigeMultiplier * gameState.clickMultiplier);
+        document.getElementById('prestige-level').textContent = gameState.prestigeLevel;
+        document.getElementById('prestige-mult').textContent = gameState.prestigeMultiplier.toFixed(1);
+        document.getElementById('total-earned').textContent = formatNumber(gameState.totalEarned);
+        
+        const prestigeBtn = document.getElementById('prestige-btn');
+        prestigeBtn.disabled = gameState.totalEarned < PRESTIGE_THRESHOLD;
+        
+        renderBusinesses();
+        renderUpgrades();
+    }
+
+    function isUnlocked(business) {
+        if (business.unlockPrestige > gameState.prestigeLevel) return false;
+        if (business.unlockCost > gameState.totalEarned) return false;
+        return true;
+    }
+
+    let currentSceneIndex = null;
+
+    function renderBusinesses() {
+        const container = document.getElementById('business-list');
+        container.innerHTML = '';
+        
+        gameState.businesses.forEach((business, index) => {
+            const unlocked = isUnlocked(business);
+            const cost = getBusinessCost(business);
+            const income = business.baseIncome * business.incomeMultiplier * gameState.prestigeMultiplier;
+            const canAfford = gameState.money >= cost && unlocked;
+            const hasScene = !!business.sceneUrl;
+            
+            const card = document.createElement('div');
+            let cardClass = 'business-card';
+            if (!unlocked) cardClass += ' locked';
+            if (hasScene && unlocked) cardClass += ' has-scene';
+            card.className = cardClass;
+            
+            if (unlocked) {
+                card.innerHTML = `
+                    <div class="business-icon">${business.icon}</div>
+                    <div class="business-info">
+                        <div class="business-name">${business.name}</div>
+                        <div class="business-stats">
+                            Owned: <span>${business.owned}</span> | 
+                            Income: <span>$${formatNumber(income)}/sec each</span>
+                        </div>
+                    </div>
+                    <button class="buy-btn" data-index="${index}" ${canAfford ? '' : 'disabled'}>
+                        Buy<br>$${formatNumber(cost)}
+                    </button>
+                `;
+                
+                // Add click to open scene (on card, not button)
+                if (hasScene) {
+                    card.querySelector('.business-icon').onclick = () => openScene(index);
+                    card.querySelector('.business-info').onclick = () => openScene(index);
+                }
+            } else {
+                const needsPrestige = business.unlockPrestige > gameState.prestigeLevel;
+                const lockText = needsPrestige 
+                    ? `🔒 Requires Prestige ${business.unlockPrestige}`
+                    : `🔒 Unlocks at $${formatNumber(business.unlockCost)} earned`;
+                const lockClass = needsPrestige ? 'lock-info prestige-lock' : 'lock-info';
+                
+                card.innerHTML = `
+                    <div class="business-icon">${business.icon}</div>
+                    <div class="business-info">
+                        <div class="business-name">${business.name}</div>
+                        <div class="${lockClass}">${lockText}</div>
+                    </div>
+                `;
+            }
+            
+            container.appendChild(card);
+        });
+
+        document.querySelectorAll('.buy-btn').forEach(btn => {
+            btn.onclick = (e) => {
+                e.stopPropagation();
+                buyBusiness(parseInt(btn.dataset.index));
+            };
+        });
+    }
+
+    function openScene(index) {
+        const business = gameState.businesses[index];
+        if (!business.sceneUrl) return;
+        
+        currentSceneIndex = index;
+        
+        document.getElementById('scene-bg').style.backgroundImage = `url(${business.sceneUrl})`;
+        document.getElementById('scene-title').textContent = business.name;
+        
+        updateSceneStats();
+        
+        document.getElementById('scene-modal').classList.add('show');
+    }
+
+    function updateSceneStats() {
+        if (currentSceneIndex === null) return;
+        
+        const business = gameState.businesses[currentSceneIndex];
+        const cost = getBusinessCost(business);
+        const income = business.baseIncome * business.incomeMultiplier * gameState.prestigeMultiplier;
+        const totalIncome = income * business.owned;
+        const canAfford = gameState.money >= cost;
+        
+        document.getElementById('scene-owned').textContent = business.owned;
+        document.getElementById('scene-income').textContent = `$${formatNumber(income)}/sec`;
+        document.getElementById('scene-total').textContent = `$${formatNumber(totalIncome)}/sec`;
+        
+        const buyBtn = document.getElementById('scene-buy');
+        buyBtn.textContent = `Buy — $${formatNumber(cost)}`;
+        buyBtn.disabled = !canAfford;
+    }
+
+    function closeScene() {
+        document.getElementById('scene-modal').classList.remove('show');
+        currentSceneIndex = null;
+    }
+
+    function buyFromScene() {
+        if (currentSceneIndex === null) return;
+        buyBusiness(currentSceneIndex);
+        updateSceneStats();
+    }
+
+    function buyBusiness(index) {
+        const business = gameState.businesses[index];
+        const cost = getBusinessCost(business);
+        
+        if (gameState.money >= cost) {
+            gameState.money -= cost;
+            business.owned += 1;
+            
+            // Track first purchase of this business
+            if (business.owned === 1) {
+                trackBusinessPurchase(business.id);
+            }
+            
+            updateUI();
+            saveGame();
+        }
+    }
+
+    function isUpgradeUnlocked(upgrade) {
+        if (upgrade.unlockPrestige > gameState.prestigeLevel) return false;
+        if (upgrade.unlockCost > gameState.totalEarned) return false;
+        return true;
+    }
+
+    function renderUpgrades() {
+        const container = document.getElementById('upgrade-list');
+        container.innerHTML = '';
+        
+        gameState.upgrades.forEach((upgrade, index) => {
+            const unlocked = isUpgradeUnlocked(upgrade);
+            const canAfford = gameState.money >= upgrade.cost && !upgrade.purchased && unlocked;
+            
+            const card = document.createElement('div');
+            let cardClass = 'upgrade-card';
+            if (upgrade.purchased) cardClass += ' purchased';
+            else if (!unlocked) cardClass += ' locked';
+            card.className = cardClass;
+            
+            if (unlocked) {
+                card.innerHTML = `
+                    <div class="upgrade-icon">${upgrade.icon}</div>
+                    <div class="upgrade-info">
+                        <div class="upgrade-name">${upgrade.name}</div>
+                        <div class="upgrade-effect">${upgrade.effect}</div>
+                        <div class="upgrade-type">${upgrade.type}</div>
+                    </div>
+                    <button class="upgrade-btn ${upgrade.purchased ? 'purchased' : ''}" 
+                            data-index="${index}" 
+                            ${upgrade.purchased || !canAfford ? 'disabled' : ''}>
+                        ${upgrade.purchased ? '✓' : '$' + formatNumber(upgrade.cost)}
+                    </button>
+                `;
+            } else {
+                const needsPrestige = upgrade.unlockPrestige > gameState.prestigeLevel;
+                const lockText = needsPrestige 
+                    ? `🔒 Requires Prestige ${upgrade.unlockPrestige}`
+                    : `🔒 Unlocks at $${formatNumber(upgrade.unlockCost)} earned`;
+                
+                card.innerHTML = `
+                    <div class="upgrade-icon">${upgrade.icon}</div>
+                    <div class="upgrade-info">
+                        <div class="upgrade-name">${upgrade.name}</div>
+                        <div class="lock-info">${lockText}</div>
+                    </div>
+                `;
+            }
+            
+            container.appendChild(card);
+        });
+
+        document.querySelectorAll('.upgrade-btn:not(.purchased)').forEach(btn => {
+            btn.onclick = () => buyUpgrade(parseInt(btn.dataset.index));
+        });
+    }
+
+    function buyUpgrade(index) {
+        const upgrade = gameState.upgrades[index];
+        
+        if (gameState.money >= upgrade.cost && !upgrade.purchased) {
+            gameState.money -= upgrade.cost;
+            upgrade.purchased = true;
+            
+            // Apply the upgrade effect
+            const defaultUpgrade = DEFAULT_UPGRADES[index];
+            if (defaultUpgrade && defaultUpgrade.apply) {
+                defaultUpgrade.apply(gameState);
+            }
+            
+            setupAutoClick();
+            updateUI();
+            updateBonusSummary();
+            saveGame();
+        }
+    }
+
+    function doWork(event) {
+        const earnings = gameState.clickPower * gameState.prestigeMultiplier * gameState.clickMultiplier;
+        gameState.money += earnings;
+        gameState.totalEarned += earnings;
+        
+        const feedback = document.createElement('div');
+        feedback.className = 'click-feedback';
+        feedback.textContent = `+$${formatNumber(earnings)}`;
+        feedback.style.left = `${event.clientX}px`;
+        feedback.style.top = `${event.clientY - 20}px`;
+        document.body.appendChild(feedback);
+        
+        setTimeout(() => feedback.remove(), 800);
+        
+        updateUI();
+    }
+
+    function doPrestige() {
+        if (gameState.totalEarned < PRESTIGE_THRESHOLD) return;
+        
+        if (confirm('Are you sure you want to prestige? You will lose all money, businesses and upgrades, but gain a permanent +0.5x multiplier.')) {
+            // Track prestige
+            trackPrestige();
+            
+            gameState.prestigeLevel += 1;
+            gameState.prestigeMultiplier = 1 + gameState.prestigeLevel * 0.5;
+            gameState.money = 0;
+            gameState.totalEarned = 0;
+            gameState.clickPower = 1;
+            gameState.clickMultiplier = 1;
+            gameState.globalMultiplier = 1;
+            gameState.bonusIncome = 0;
+            gameState.offlineMultiplier = 1;
+            gameState.autoClickInterval = 0;
+            gameState.businesses = JSON.parse(JSON.stringify(DEFAULT_BUSINESSES));
+            gameState.upgrades = JSON.parse(JSON.stringify(DEFAULT_UPGRADES));
+            
             if (autoClickTimer) {
                 clearInterval(autoClickTimer);
                 autoClickTimer = null;
             }
-            if (gameState.autoClickInterval > 0) {
-                autoClickTimer = setInterval(() => {
-                    const earnings = gameState.clickPower * gameState.prestigeMultiplier * gameState.clickMultiplier;
-                    gameState.money += earnings;
-                    gameState.totalEarned += earnings;
-                    updateUI();
-                }, gameState.autoClickInterval);
-            }
-        }
-
-        function calculateOfflineProgress() {
-            const now = Date.now();
-            const elapsed = Math.floor((now - gameState.lastSaved) / 1000);
-            
-            if (elapsed > 10) {
-                const cappedSeconds = Math.min(elapsed, MAX_OFFLINE_SECONDS);
-                const incomePerSecond = getTotalIncomePerSecond();
-                const offlineEarnings = incomePerSecond * cappedSeconds * gameState.offlineMultiplier;
-                
-                if (offlineEarnings > 0) {
-                    document.getElementById('offline-earnings').textContent = formatNumber(offlineEarnings);
-                    document.getElementById('offline-modal').classList.add('show');
-                    
-                    document.getElementById('collect-btn').onclick = () => {
-                        gameState.money += offlineEarnings;
-                        gameState.totalEarned += offlineEarnings;
-                        document.getElementById('offline-modal').classList.remove('show');
-                        updateUI();
-                        saveGame();
-                    };
-                }
-            }
-        }
-
-        function updateUI() {
-            document.getElementById('money').textContent = formatNumber(gameState.money);
-            document.getElementById('income-rate').textContent = formatNumber(getTotalIncomePerSecond());
-            document.getElementById('click-power').textContent = formatNumber(gameState.clickPower * gameState.prestigeMultiplier * gameState.clickMultiplier);
-            document.getElementById('prestige-level').textContent = gameState.prestigeLevel;
-            document.getElementById('prestige-mult').textContent = gameState.prestigeMultiplier.toFixed(1);
-            document.getElementById('total-earned').textContent = formatNumber(gameState.totalEarned);
-            
-            const prestigeBtn = document.getElementById('prestige-btn');
-            prestigeBtn.disabled = gameState.totalEarned < PRESTIGE_THRESHOLD;
-            
-            renderBusinesses();
-            renderUpgrades();
-        }
-
-        function isUnlocked(business) {
-            if (business.unlockPrestige > gameState.prestigeLevel) return false;
-            if (business.unlockCost > gameState.totalEarned) return false;
-            return true;
-        }
-
-        function renderBusinesses() {
-            const container = document.getElementById('business-list');
-            container.innerHTML = '';
-            
-            gameState.businesses.forEach((business, index) => {
-                const unlocked = isUnlocked(business);
-                const cost = getBusinessCost(business);
-                const income = business.baseIncome * business.incomeMultiplier * gameState.prestigeMultiplier;
-                const canAfford = gameState.money >= cost && unlocked;
-                
-                const card = document.createElement('div');
-                card.className = 'business-card' + (unlocked ? '' : ' locked');
-                
-                if (unlocked) {
-                    card.innerHTML = `
-                        <div class="business-icon">${business.icon}</div>
-                        <div class="business-info">
-                            <div class="business-name">${business.name}</div>
-                            <div class="business-stats">
-                                Owned: <span>${business.owned}</span> | 
-                                Income: <span>$${formatNumber(income)}/sec each</span>
-                            </div>
-                        </div>
-                        <button class="buy-btn" data-index="${index}" ${canAfford ? '' : 'disabled'}>
-                            Buy<br>$${formatNumber(cost)}
-                        </button>
-                    `;
-                } else {
-                    const needsPrestige = business.unlockPrestige > gameState.prestigeLevel;
-                    const lockText = needsPrestige 
-                        ? `🔒 Requires Prestige ${business.unlockPrestige}`
-                        : `🔒 Unlocks at $${formatNumber(business.unlockCost)} earned`;
-                    const lockClass = needsPrestige ? 'lock-info prestige-lock' : 'lock-info';
-                    
-                    card.innerHTML = `
-                        <div class="business-icon">${business.icon}</div>
-                        <div class="business-info">
-                            <div class="business-name">${business.name}</div>
-                            <div class="${lockClass}">${lockText}</div>
-                        </div>
-                    `;
-                }
-                
-                container.appendChild(card);
-            });
-
-            document.querySelectorAll('.buy-btn').forEach(btn => {
-                btn.onclick = () => buyBusiness(parseInt(btn.dataset.index));
-            });
-        }
-
-        function buyBusiness(index) {
-            const business = gameState.businesses[index];
-            const cost = getBusinessCost(business);
-            
-            if (gameState.money >= cost) {
-                gameState.money -= cost;
-                business.owned += 1;
-                updateUI();
-                saveGame();
-            }
-        }
-
-        function isUpgradeUnlocked(upgrade) {
-            if (upgrade.unlockPrestige > gameState.prestigeLevel) return false;
-            if (upgrade.unlockCost > gameState.totalEarned) return false;
-            return true;
-        }
-
-        function renderUpgrades() {
-            const container = document.getElementById('upgrade-list');
-            container.innerHTML = '';
-            
-            gameState.upgrades.forEach((upgrade, index) => {
-                const unlocked = isUpgradeUnlocked(upgrade);
-                const canAfford = gameState.money >= upgrade.cost && !upgrade.purchased && unlocked;
-                
-                const card = document.createElement('div');
-                let cardClass = 'upgrade-card';
-                if (upgrade.purchased) cardClass += ' purchased';
-                else if (!unlocked) cardClass += ' locked';
-                card.className = cardClass;
-                
-                if (unlocked) {
-                    card.innerHTML = `
-                        <div class="upgrade-icon">${upgrade.icon}</div>
-                        <div class="upgrade-info">
-                            <div class="upgrade-name">${upgrade.name}</div>
-                            <div class="upgrade-effect">${upgrade.effect}</div>
-                            <div class="upgrade-type">${upgrade.type}</div>
-                        </div>
-                        <button class="upgrade-btn ${upgrade.purchased ? 'purchased' : ''}" 
-                                data-index="${index}" 
-                                ${upgrade.purchased || !canAfford ? 'disabled' : ''}>
-                            ${upgrade.purchased ? '✓' : '$' + formatNumber(upgrade.cost)}
-                        </button>
-                    `;
-                } else {
-                    const needsPrestige = upgrade.unlockPrestige > gameState.prestigeLevel;
-                    const lockText = needsPrestige 
-                        ? `🔒 Requires Prestige ${upgrade.unlockPrestige}`
-                        : `🔒 Unlocks at $${formatNumber(upgrade.unlockCost)} earned`;
-                    
-                    card.innerHTML = `
-                        <div class="upgrade-icon">${upgrade.icon}</div>
-                        <div class="upgrade-info">
-                            <div class="upgrade-name">${upgrade.name}</div>
-                            <div class="lock-info">${lockText}</div>
-                        </div>
-                    `;
-                }
-                
-                container.appendChild(card);
-            });
-
-            document.querySelectorAll('.upgrade-btn:not(.purchased)').forEach(btn => {
-                btn.onclick = () => buyUpgrade(parseInt(btn.dataset.index));
-            });
-        }
-
-        function buyUpgrade(index) {
-            const upgrade = gameState.upgrades[index];
-            
-            if (gameState.money >= upgrade.cost && !upgrade.purchased) {
-                gameState.money -= upgrade.cost;
-                upgrade.purchased = true;
-                
-                // Apply the upgrade effect
-                const defaultUpgrade = DEFAULT_UPGRADES[index];
-                if (defaultUpgrade && defaultUpgrade.apply) {
-                    defaultUpgrade.apply(gameState);
-                }
-                
-                setupAutoClick();
-                updateUI();
-                updateBonusSummary();
-                saveGame();
-            }
-        }
-
-        function doWork(event) {
-            const earnings = gameState.clickPower * gameState.prestigeMultiplier * gameState.clickMultiplier;
-            gameState.money += earnings;
-            gameState.totalEarned += earnings;
-            
-            const feedback = document.createElement('div');
-            feedback.className = 'click-feedback';
-            feedback.textContent = `+$${formatNumber(earnings)}`;
-            feedback.style.left = `${event.clientX}px`;
-            feedback.style.top = `${event.clientY - 20}px`;
-            document.body.appendChild(feedback);
-            
-            setTimeout(() => feedback.remove(), 800);
             
             updateUI();
+            saveGame();
         }
+    }
 
-        function doPrestige() {
-            if (gameState.totalEarned < PRESTIGE_THRESHOLD) return;
-            
-            if (confirm('Are you sure you want to prestige? You will lose all money, businesses and upgrades, but gain a permanent +0.5x multiplier.')) {
-                gameState.prestigeLevel += 1;
-                gameState.prestigeMultiplier = 1 + gameState.prestigeLevel * 0.5;
-                gameState.money = 0;
-                gameState.totalEarned = 0;
-                gameState.clickPower = 1;
-                gameState.clickMultiplier = 1;
-                gameState.globalMultiplier = 1;
-                gameState.bonusIncome = 0;
-                gameState.offlineMultiplier = 1;
-                gameState.autoClickInterval = 0;
-                gameState.businesses = JSON.parse(JSON.stringify(DEFAULT_BUSINESSES));
-                gameState.upgrades = JSON.parse(JSON.stringify(DEFAULT_UPGRADES));
-                
-                if (autoClickTimer) {
-                    clearInterval(autoClickTimer);
-                    autoClickTimer = null;
-                }
-                
-                updateUI();
-                saveGame();
-            }
-        }
-
-        function gameLoop() {
-            const income = getTotalIncomePerSecond();
-            if (income > 0) {
-                gameState.money += income;
-                gameState.totalEarned += income;
-                updateUI();
-            }
-        }
-
-        function switchTab(tabName) {
-            document.querySelectorAll('.tab-btn').forEach(btn => {
-                btn.classList.toggle('active', btn.dataset.tab === tabName);
-            });
-            document.querySelectorAll('.tab-content').forEach(content => {
-                content.classList.toggle('active', content.id === 'tab-' + tabName);
-            });
-        }
-
-        function updateBonusSummary() {
-            document.getElementById('bonus-income').textContent = 
-                gameState.bonusIncome > 0 ? `+$${formatNumber(gameState.bonusIncome)}/sec` : '+$0/sec';
-            document.getElementById('bonus-income').classList.toggle('neutral', gameState.bonusIncome === 0);
-            
-            document.getElementById('bonus-global').textContent = `x${gameState.globalMultiplier.toFixed(2)}`;
-            document.getElementById('bonus-global').classList.toggle('neutral', gameState.globalMultiplier === 1);
-            
-            document.getElementById('bonus-click').textContent = `x${gameState.clickMultiplier.toFixed(2)}`;
-            document.getElementById('bonus-click').classList.toggle('neutral', gameState.clickMultiplier === 1);
-            
-            document.getElementById('bonus-offline').textContent = `x${gameState.offlineMultiplier.toFixed(2)}`;
-            document.getElementById('bonus-offline').classList.toggle('neutral', gameState.offlineMultiplier === 1);
-            
-            document.getElementById('bonus-clickpower').textContent = `$${gameState.clickPower}`;
-            document.getElementById('bonus-clickpower').classList.toggle('neutral', gameState.clickPower === 1);
-            
-            const autoClickText = gameState.autoClickInterval > 0 
-                ? `Every ${gameState.autoClickInterval / 1000}s` 
-                : 'Off';
-            document.getElementById('bonus-autoclick').textContent = autoClickText;
-            document.getElementById('bonus-autoclick').classList.toggle('neutral', gameState.autoClickInterval === 0);
-        }
-
-        function init() {
-            loadGame();
+    function gameLoop() {
+        const income = getTotalIncomePerSecond();
+        if (income > 0) {
+            gameState.money += income;
+            gameState.totalEarned += income;
             updateUI();
-            updateBonusSummary();
-            
-            document.getElementById('work-btn').addEventListener('click', doWork);
-            document.getElementById('prestige-btn').addEventListener('click', doPrestige);
-            
-            document.querySelectorAll('.tab-btn').forEach(btn => {
-                btn.addEventListener('click', () => switchTab(btn.dataset.tab));
-            });
-            
-            setInterval(gameLoop, 1000);
-            setInterval(saveGame, 30000);
         }
+    }
 
-        init();
-    </script>
+    function switchTab(tabName) {
+        document.querySelectorAll('.tab-btn').forEach(btn => {
+            btn.classList.toggle('active', btn.dataset.tab === tabName);
+        });
+        document.querySelectorAll('.tab-content').forEach(content => {
+            content.classList.toggle('active', content.id === 'tab-' + tabName);
+        });
+    }
+
+    function updateBonusSummary() {
+        document.getElementById('bonus-income').textContent = 
+            gameState.bonusIncome > 0 ? `+$${formatNumber(gameState.bonusIncome)}/sec` : '+$0/sec';
+        document.getElementById('bonus-income').classList.toggle('neutral', gameState.bonusIncome === 0);
+        
+        document.getElementById('bonus-global').textContent = `x${gameState.globalMultiplier.toFixed(2)}`;
+        document.getElementById('bonus-global').classList.toggle('neutral', gameState.globalMultiplier === 1);
+        
+        document.getElementById('bonus-click').textContent = `x${gameState.clickMultiplier.toFixed(2)}`;
+        document.getElementById('bonus-click').classList.toggle('neutral', gameState.clickMultiplier === 1);
+        
+        document.getElementById('bonus-offline').textContent = `x${gameState.offlineMultiplier.toFixed(2)}`;
+        document.getElementById('bonus-offline').classList.toggle('neutral', gameState.offlineMultiplier === 1);
+        
+        document.getElementById('bonus-clickpower').textContent = `$${gameState.clickPower}`;
+        document.getElementById('bonus-clickpower').classList.toggle('neutral', gameState.clickPower === 1);
+        
+        const autoClickText = gameState.autoClickInterval > 0 
+            ? `Every ${gameState.autoClickInterval / 1000}s` 
+            : 'Off';
+        document.getElementById('bonus-autoclick').textContent = autoClickText;
+        document.getElementById('bonus-autoclick').classList.toggle('neutral', gameState.autoClickInterval === 0);
+    }
+
+    // === STATS TRACKING ===
+    function initStats() {
+        if (!gameState.stats.firstPlayed) {
+            gameState.stats.firstPlayed = Date.now();
+        }
+        gameState.stats.sessionStart = Date.now();
+        gameState.stats.sessionCount++;
+        console.log('📊 Stats initialized. Session #' + gameState.stats.sessionCount);
+    }
+
+    function trackMilestone(name) {
+        if (!gameState.stats.milestones[name]) {
+            const timeSinceStart = Math.floor((Date.now() - gameState.stats.firstPlayed) / 1000);
+            gameState.stats.milestones[name] = {
+                reached: Date.now(),
+                secondsFromStart: timeSinceStart
+            };
+            console.log(`🏆 Milestone: ${name} at ${timeSinceStart}s`);
+        }
+    }
+
+    function trackBusinessPurchase(businessId) {
+        const businessOrder = ['lemonade', 'coffee', 'restaurant', 'delivery', 'fitness', 'carwash', 'itcompany', 'media', 'bank', 'realestate', 'investment', 'spacemining', 'interplanetary'];
+        const currentIndex = businessOrder.indexOf(gameState.stats.highestBusinessId);
+        const newIndex = businessOrder.indexOf(businessId);
+        
+        if (newIndex > currentIndex) {
+            gameState.stats.highestBusinessId = businessId;
+            trackMilestone('first_' + businessId);
+        }
+    }
+
+    function trackPrestige() {
+        if (!gameState.stats.firstPrestigeTime) {
+            gameState.stats.firstPrestigeTime = Date.now();
+            const timeSinceStart = Math.floor((Date.now() - gameState.stats.firstPlayed) / 1000);
+            console.log(`⭐ First prestige at ${timeSinceStart}s (${(timeSinceStart/60).toFixed(1)} min)`);
+        }
+        gameState.stats.prestigeCount++;
+        trackMilestone('prestige_' + gameState.stats.prestigeCount);
+    }
+
+    function updatePlayTime() {
+        if (gameState.stats.sessionStart) {
+            const sessionTime = Math.floor((Date.now() - gameState.stats.sessionStart) / 1000);
+            // Update every save
+        }
+    }
+
+    function printStats() {
+        const s = gameState.stats;
+        const totalTime = s.firstPlayed ? Math.floor((Date.now() - s.firstPlayed) / 1000) : 0;
+        console.log('📊 === GAME STATS ===');
+        console.log(`First played: ${s.firstPlayed ? new Date(s.firstPlayed).toLocaleString() : 'N/A'}`);
+        console.log(`Total time: ${(totalTime/60).toFixed(1)} min`);
+        console.log(`Sessions: ${s.sessionCount}`);
+        console.log(`Highest business: ${s.highestBusinessId}`);
+        console.log(`Prestige count: ${s.prestigeCount}`);
+        console.log(`First prestige: ${s.firstPrestigeTime ? ((s.firstPrestigeTime - s.firstPlayed)/1000/60).toFixed(1) + ' min' : 'Not yet'}`);
+        console.log('Milestones:', s.milestones);
+        console.log('📊 ==================');
+    }
+
+    // Expose to console for debugging
+    window.gameStats = printStats;
+
+    function init() {
+        loadGame();
+        initStats();
+        updateUI();
+        updateBonusSummary();
+        
+        document.getElementById('work-btn').addEventListener('click', doWork);
+        document.getElementById('prestige-btn').addEventListener('click', doPrestige);
+        
+        document.querySelectorAll('.tab-btn').forEach(btn => {
+            btn.addEventListener('click', () => switchTab(btn.dataset.tab));
+        });
+        
+        // Scene modal events
+        document.getElementById('scene-close').addEventListener('click', closeScene);
+        document.getElementById('scene-buy').addEventListener('click', buyFromScene);
+        document.getElementById('scene-modal').addEventListener('click', (e) => {
+            if (e.target.id === 'scene-modal' || e.target.classList.contains('scene-overlay')) {
+                closeScene();
+            }
+        });
+        
+        setInterval(gameLoop, 1000);
+        setInterval(saveGame, 30000);
+        
+        console.log('💼 Business Empire Idle loaded. Type gameStats() to see tracking data.');
+    }
+
+    init();
+</script>
+```
+
 </body>
 </html>
