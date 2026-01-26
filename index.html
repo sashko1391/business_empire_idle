@@ -264,6 +264,32 @@
         cursor: not-allowed;
     }
 
+    .business-actions {
+        display: flex;
+        gap: 8px;
+        align-items: center;
+    }
+
+    .view-btn {
+        background: rgba(245, 166, 35, 0.2);
+        border: 1px solid rgba(245, 166, 35, 0.4);
+        color: #f5a623;
+        width: 44px;
+        height: 44px;
+        border-radius: 8px;
+        cursor: pointer;
+        font-size: 1.2rem;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        transition: all 0.2s;
+    }
+
+    .view-btn:hover {
+        background: rgba(245, 166, 35, 0.3);
+        transform: scale(1.05);
+    }
+
     .prestige-section {
         background: linear-gradient(135deg, rgba(245, 166, 35, 0.1) 0%, rgba(224, 142, 11, 0.1) 100%);
         border: 1px solid rgba(245, 166, 35, 0.3);
@@ -393,6 +419,35 @@
     .prestige-btn:disabled {
         opacity: 0.4;
         cursor: not-allowed;
+    }
+
+    .reset-section {
+        margin-top: 20px;
+        padding-top: 15px;
+        border-top: 1px solid rgba(255, 255, 255, 0.1);
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+
+    .reset-btn {
+        background: rgba(255, 100, 100, 0.1);
+        border: 1px solid rgba(255, 100, 100, 0.3);
+        color: #ff6b6b;
+        padding: 8px 16px;
+        border-radius: 6px;
+        cursor: pointer;
+        font-size: 0.85rem;
+        transition: all 0.2s;
+    }
+
+    .reset-btn:hover {
+        background: rgba(255, 100, 100, 0.2);
+    }
+
+    .version-info {
+        font-size: 0.75rem;
+        color: #555;
     }
 
     .offline-modal {
@@ -666,6 +721,11 @@
         Requires $1,000,000 total earned.</p>
         <p>Total Earned: $<span id="total-earned">0</span></p>
         <button class="prestige-btn" id="prestige-btn" disabled>PRESTIGE (+0.5x)</button>
+        
+        <div class="reset-section">
+            <button class="reset-btn" id="reset-btn">🗑️ Reset Save</button>
+            <span class="version-info">v<span id="game-version"></span></span>
+        </div>
     </div>
 </div>
 
@@ -706,6 +766,7 @@
 </div>
 
 <script>
+    const GAME_VERSION = '1.2.0';
     const STORAGE_KEY = 'businessEmpireIdle';
     const MAX_OFFLINE_SECONDS = 8 * 60 * 60;
     const PRESTIGE_THRESHOLD = 1000000;
@@ -855,8 +916,7 @@
             incomeMultiplier: 1,
             unlockCost: 0,
             unlockPrestige: 0,
-            // Placeholder - replace with your MidJourney image URL
-            sceneUrl: 'https://github.com/sashko1391/business_empire_idle/blob/f2d2b678dc95768340030d168de0697d4a39a784/images/lemonade_1.png'
+            sceneUrl: 'https://raw.githubusercontent.com/sashko1391/business_empire_idle/main/images/lemonade_1.png'
         },
         {
             id: 'coffee',
@@ -869,8 +929,7 @@
             incomeMultiplier: 1,
             unlockCost: 50,
             unlockPrestige: 0,
-            // Placeholder - replace with your MidJourney image URL
-            sceneUrl: 'https://github.com/sashko1391/business_empire_idle/blob/f2d2b678dc95768340030d168de0697d4a39a784/images/coffee_1.png'
+            sceneUrl: 'https://raw.githubusercontent.com/sashko1391/business_empire_idle/main/images/coffee_1.png'
         },
         {
             id: 'restaurant',
@@ -1063,9 +1122,36 @@
     function saveGame() {
         gameState.lastSaved = Date.now();
         localStorage.setItem(STORAGE_KEY, JSON.stringify(gameState));
+        localStorage.setItem('gameVersion', GAME_VERSION);
     }
 
+    function checkVersion() {
+        const savedVersion = localStorage.getItem('gameVersion');
+        if (savedVersion !== GAME_VERSION) {
+            console.log(`🔄 Game updated: ${savedVersion || 'none'} → ${GAME_VERSION}. Resetting save.`);
+            localStorage.removeItem(STORAGE_KEY);
+            localStorage.setItem('gameVersion', GAME_VERSION);
+            return true; // was reset
+        }
+        return false;
+    }
+
+    function resetGame() {
+        if (confirm('Are you sure? This will delete ALL progress permanently.')) {
+            localStorage.removeItem(STORAGE_KEY);
+            localStorage.removeItem('gameVersion');
+            location.reload();
+        }
+    }
+
+    // Expose to console
+    window.resetGame = resetGame;
+
     function loadGame() {
+        // Check version first
+        const wasReset = checkVersion();
+        if (wasReset) return; // fresh start
+        
         const saved = localStorage.getItem(STORAGE_KEY);
         if (saved) {
             const parsed = JSON.parse(saved);
@@ -1174,6 +1260,7 @@
             card.className = cardClass;
             
             if (unlocked) {
+                const viewBtn = hasScene ? `<button class="view-btn" data-index="${index}">👁</button>` : '';
                 card.innerHTML = `
                     <div class="business-icon">${business.icon}</div>
                     <div class="business-info">
@@ -1183,11 +1270,13 @@
                             Income: <span>$${formatNumber(income)}/sec each</span>
                         </div>
                     </div>
-                    <button class="buy-btn" data-index="${index}" ${canAfford ? '' : 'disabled'}>
-                        Buy<br>$${formatNumber(cost)}
-                    </button>
+                    <div class="business-actions">
+                        ${viewBtn}
+                        <button class="buy-btn" data-index="${index}" ${canAfford ? '' : 'disabled'}>
+                            Buy<br>$${formatNumber(cost)}
+                        </button>
+                    </div>
                 `;
-                
                 // Add click to open scene (on card, not button)
                 if (hasScene) {
                     card.querySelector('.business-icon').onclick = () => openScene(index);
@@ -1216,6 +1305,13 @@
             btn.onclick = (e) => {
                 e.stopPropagation();
                 buyBusiness(parseInt(btn.dataset.index));
+            };
+        });
+
+        document.querySelectorAll('.view-btn').forEach(btn => {
+            btn.onclick = (e) => {
+                e.stopPropagation();
+                openScene(parseInt(btn.dataset.index));
             };
         });
     }
@@ -1535,10 +1631,14 @@
             }
         });
         
+        // Reset button
+        document.getElementById('reset-btn').addEventListener('click', resetGame);
+        document.getElementById('game-version').textContent = GAME_VERSION;
+        
         setInterval(gameLoop, 1000);
         setInterval(saveGame, 30000);
         
-        console.log('💼 Business Empire Idle loaded. Type gameStats() to see tracking data.');
+        console.log(`💼 Business Empire Idle v${GAME_VERSION} loaded. Type gameStats() to see tracking data.`);
     }
 
     init();
