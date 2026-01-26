@@ -4,7 +4,7 @@ A minimalist idle/clicker business empire game. Click, automate, prestige.
 
 ## 🎮 Play
 
-[Play Now](https://YOUR_USERNAME.github.io/business-empire-idle/)
+[Play Now](https://sashko1391.github.io/business_empire_idle/)
 
 ## Features
 
