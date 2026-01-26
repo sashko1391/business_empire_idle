@@ -13,17 +13,66 @@
         }
 
 ```
+    :root {
+        --bg-early: url('https://raw.githubusercontent.com/sashko1391/business_empire_idle/main/images/backgrounds/u3963775521_Small_cramped_home_office_in_a_garage_cluttered_d_761683e7-79d1-4921-8a3e-8d70f235b5d3_3.png');
+        --bg-mid: url('https://raw.githubusercontent.com/sashko1391/business_empire_idle/main/images/backgrounds/mid_office.png');
+        --bg-endgame: url('https://raw.githubusercontent.com/sashko1391/business_empire_idle/main/images/backgrounds/endgame_office.png');
+    }
+
     body {
         font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-        background: linear-gradient(135deg, #1c1c1e 0%, #2c2c2e 100%);
         min-height: 100vh;
         color: #eee;
         padding: 20px;
+        position: relative;
+    }
+
+    .game-background {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        z-index: -2;
+        background-color: #1c1c1e;
+        background-size: cover;
+        background-position: center;
+        background-repeat: no-repeat;
+        transition: background-image 1s ease-in-out;
+    }
+
+    .game-background.early {
+        background-image: var(--bg-early);
+    }
+
+    .game-background.mid {
+        background-image: var(--bg-mid);
+    }
+
+    .game-background.endgame {
+        background-image: var(--bg-endgame);
+    }
+
+    .game-background-overlay {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        z-index: -1;
+        background: linear-gradient(
+            to bottom,
+            rgba(28, 28, 30, 0.7) 0%,
+            rgba(28, 28, 30, 0.5) 30%,
+            rgba(28, 28, 30, 0.5) 70%,
+            rgba(28, 28, 30, 0.85) 100%
+        );
     }
 
     .container {
         max-width: 600px;
         margin: 0 auto;
+        position: relative;
     }
 
     h1 {
@@ -652,10 +701,13 @@
 
 </head>
 <body>
-    <div class="container">
-        <h1>💼 Business Empire</h1>
+    <div class="game-background early" id="game-bg"></div>
+    <div class="game-background-overlay"></div>
 
 ```
+<div class="container">
+    <h1>💼 Business Empire</h1>
+    
     <div class="money-display">
         <div class="money-amount">$<span id="money">0</span></div>
         <div class="income-rate">$<span id="income-rate">0</span>/sec</div>
@@ -766,7 +818,7 @@
 </div>
 
 <script>
-    const GAME_VERSION = '1.2.0';
+    const GAME_VERSION = '1.3.0';
     const STORAGE_KEY = 'businessEmpireIdle';
     const MAX_OFFLINE_SECONDS = 8 * 60 * 60;
     const PRESTIGE_THRESHOLD = 1000000;
@@ -1230,8 +1282,35 @@
         const prestigeBtn = document.getElementById('prestige-btn');
         prestigeBtn.disabled = gameState.totalEarned < PRESTIGE_THRESHOLD;
         
+        updateBackground();
         renderBusinesses();
         renderUpgrades();
+    }
+
+    function updateBackground() {
+        const bg = document.getElementById('game-bg');
+        const totalEarned = gameState.totalEarned;
+        const prestige = gameState.prestigeLevel;
+        
+        // Thresholds for background changes
+        // Early: start -> $100K or prestige 0
+        // Mid: $100K+ or prestige 1+
+        // Endgame: $10M+ or prestige 2+
+        
+        let stage = 'early';
+        
+        if (prestige >= 2 || totalEarned >= 10000000) {
+            stage = 'endgame';
+        } else if (prestige >= 1 || totalEarned >= 100000) {
+            stage = 'mid';
+        }
+        
+        // Only update if changed
+        if (!bg.classList.contains(stage)) {
+            bg.classList.remove('early', 'mid', 'endgame');
+            bg.classList.add(stage);
+            console.log(`🏢 Office upgraded to: ${stage}`);
+        }
     }
 
     function isUnlocked(business) {
