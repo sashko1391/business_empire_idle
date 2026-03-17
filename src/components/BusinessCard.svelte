@@ -88,16 +88,14 @@
 			<span class="tier-badge tier-badge-{tierIdx + 1}">{tier.label}</span>
 			{/if}
 		</div>
-		<div class="business-stats">
-			<span class="owned-count">{business.owned}</span> owned |
-			<span class="income-val">${formatNumber(income * business.owned)}/sec</span>
-			{#if tier && tier.bonus > 1}
-			<span class="tier-bonus">×{tier.bonus}</span>
-			{/if}
+		<div class="income-line">
+			${formatNumber(income * business.owned)}<span class="per-sec">/sec</span>
+			{#if tier && tier.bonus > 1}<span class="tier-bonus">×{tier.bonus}</span>{/if}
 		</div>
-		{#if activeSyns.length}
-		<div class="syn-badge">⚡ {activeSyns.map(s => s.desc).join(' · ')}</div>
-		{/if}
+		<div class="owned-line">
+			<span class="owned-count">{business.owned}</span><span class="owned-label"> owned</span>
+			{#if activeSyns.length}<span class="syn-dot">⚡</span>{/if}
+		</div>
 		<!-- Tier progress bar -->
 		{#if nextTier}
 		<div class="tier-progress-wrap">
@@ -169,7 +167,7 @@
 		gap: 6px;
 		flex-wrap: wrap;
 	}
-	.business-name { font-weight: bold; font-size: 0.95rem; }
+	.business-name { font-weight: 700; font-size: 1rem; color: #e0e0e0; }
 
 	.tier-badge {
 		font-size: 0.65rem;
@@ -183,15 +181,29 @@
 	.tier-badge-2 { background: rgba(245,166,35,0.2); color: #f5a623; border: 1px solid rgba(245,166,35,0.4); }
 	.tier-badge-3 { background: rgba(167,139,250,0.2); color: #a78bfa; border: 1px solid rgba(167,139,250,0.5); }
 
-	.owned-count { color: #f5a623; font-weight: bold; }
-	.income-val  { color: #4ade80; }
-	.tier-bonus  { color: #a78bfa; font-size: 0.72rem; font-weight: bold; }
-
-	.syn-badge {
+	.income-line {
+		font-size: 1.25rem;
+		font-weight: 800;
 		color: #4ade80;
-		font-size: 0.72rem;
-		margin-top: 2px;
+		line-height: 1.2;
+		margin-top: 3px;
+		letter-spacing: -0.3px;
 	}
+	.income-line .per-sec {
+		font-size: 0.75rem;
+		font-weight: 500;
+		color: #4ade8099;
+		margin-left: 1px;
+	}
+	.owned-line {
+		margin-top: 3px;
+		font-size: 0.82rem;
+		color: #888;
+	}
+	.owned-count { color: #f5a623; font-weight: 700; font-size: 0.9rem; }
+	.owned-label { color: #666; }
+	.syn-dot { margin-left: 4px; }
+	.tier-bonus  { color: #a78bfa; font-size: 0.75rem; font-weight: bold; margin-left: 4px; }
 
 	.tier-progress-wrap {
 		margin-top: 5px;
