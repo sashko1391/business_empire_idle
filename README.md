@@ -1,35 +1,42 @@
-# Business Empire Idle
+# sv
 
-A minimalist idle/clicker business empire game. Click, automate, prestige.
+Everything you need to build a Svelte project, powered by [`sv`](https://github.com/sveltejs/cli).
 
-## 🎮 Play
+## Creating a project
 
-[Play Now](https://sashko1391.github.io/business_empire_idle/)
+If you're seeing this, you've probably already done this step. Congrats!
 
-## Features
+```sh
+# create a new project
+npx sv create my-app
+```
 
-- 💪 Click to earn starting money
-- 🏢 13 businesses from Lemonade Stand to Interplanetary Trade
-- ⬆️ 10 upgrades with different effects
-- 📴 Offline progress (up to 8 hours)
-- ⭐ Prestige system with permanent multipliers
-- 💾 Auto-save to localStorage
+To recreate this project with the same configuration:
 
-## How to Play
+```sh
+# recreate this project
+npx sv@0.12.7 create --template minimal --types ts --install npm .
+```
 
-1. Click "WORK" to earn money
-2. Buy businesses for passive income
-3. Purchase upgrades to boost earnings
-4. Prestige at $1M to reset with multiplier bonus
-5. Repeat and build your empire!
+## Developing
 
-## Tech
+Once you've created a project and installed dependencies with `npm install` (or `pnpm install` or `yarn`), start a development server:
 
-- Single HTML file
-- Vanilla JavaScript
-- No dependencies
-- Works offline
+```sh
+npm run dev
 
-## License
+# or start the server and open the app in a new browser tab
+npm run dev -- --open
+```
 
-MIT
+## Building
+
+To create a production version of your app:
+
+```sh
+npm run build
+```
+
+You can preview the production build with `npm run preview`.
+
+> To deploy your app, you may need to install an [adapter](https://svelte.dev/docs/kit/adapters) for your target environment.
