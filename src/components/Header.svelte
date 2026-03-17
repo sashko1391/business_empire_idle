@@ -11,45 +11,99 @@
 	$effect(() => { displayMoney.set(game.state.money); });
 	$effect(() => { displayIncome.set(game.totalIncomePerSecond); });
 	$effect(() => { displayMilestone.set(game.milestoneProgress); });
+
+	const TITLES = ['Garage Dreamer','Local Entrepreneur','Business Magnate','Corporate Titan','Industrial Baron','Galactic Emperor'];
+	const playerTitle = $derived(TITLES[Math.min(game.state.prestigeLevel, TITLES.length - 1)]);
 </script>
 
-<h1>💼 Business Empire</h1>
-
-<div class="money-display">
-	<div class="money-amount">${formatNumber($displayMoney)}</div>
-	<div class="income-rate">${formatNumber($displayIncome)}/sec</div>
-	<div class="prestige-info">
-		Prestige {game.state.prestigeLevel} |
-		{game.state.prestigeMultiplier.toFixed(1)}x multiplier
+<div class="header-wrap">
+	<div class="header-title-row">
+		<span class="game-logo">💼</span>
+		<h1>Business Empire</h1>
 	</div>
-</div>
 
-<div class="milestone-wrap">
-	<div class="milestone-label">
+	<div class="money-display">
+		<div class="money-amount">${formatNumber($displayMoney)}</div>
+		<div class="income-rate">+${formatNumber($displayIncome)}<span class="per-sec">/sec</span></div>
+		<div class="prestige-row">
+			<span class="player-title">{playerTitle}</span>
+			{#if game.state.prestigeLevel > 0}
+			<span class="prestige-badge">✦ Prestige {game.state.prestigeLevel}</span>
+			{/if}
+		</div>
+	</div>
+
+	<div class="milestone-wrap">
 		{#if game.milestoneNext !== null}
-			Next milestone: <span>${formatNumber(game.milestoneNext)}</span>
+		<div class="milestone-label">
+			<span>Next milestone</span>
+			<span class="milestone-target">${formatNumber(game.milestoneNext)}</span>
+		</div>
 		{:else}
-			🏆 All milestones reached!
+		<div class="milestone-label"><span>🏆 All milestones reached!</span></div>
 		{/if}
-	</div>
-	<div class="milestone-track">
-		<div class="milestone-fill" style="width:{$displayMilestone}%"></div>
+		<div class="milestone-track">
+			<div class="milestone-fill" style="width:{$displayMilestone}%"></div>
+		</div>
 	</div>
 </div>
 
 <style>
-	.milestone-wrap {
-		margin-top: 6px;
-		margin-bottom: 2px;
+	.header-wrap { margin-bottom: 20px; }
+
+	.header-title-row {
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		gap: 8px;
+		margin-bottom: 10px;
 	}
-	.milestone-label {
+	.game-logo { font-size: 1.6rem; }
+
+	.money-display {
+		text-align: center;
+		background: rgba(245,166,35,0.07);
+		border: 1px solid rgba(245,166,35,0.18);
+		padding: 20px 16px 14px;
+		border-radius: 16px;
+		margin-bottom: 10px;
+	}
+
+	.income-rate :global(.per-sec) { color: #4ade8099; font-size: 0.85em; }
+
+	.prestige-row {
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		gap: 10px;
+		margin-top: 8px;
+	}
+	.player-title {
+		font-size: 0.78rem;
+		color: #666;
+		font-style: italic;
+	}
+	.prestige-badge {
 		font-size: 0.72rem;
-		color: #888;
-		margin-bottom: 3px;
+		color: #a78bfa;
+		background: rgba(167,139,250,0.12);
+		border: 1px solid rgba(167,139,250,0.25);
+		border-radius: 5px;
+		padding: 1px 7px;
+		font-weight: 700;
 	}
-	.milestone-label span { color: #a78bfa; }
+
+	.milestone-wrap { }
+	.milestone-label {
+		display: flex;
+		justify-content: space-between;
+		font-size: 0.72rem;
+		color: #555;
+		margin-bottom: 4px;
+	}
+	.milestone-target { color: #a78bfa; font-weight: 700; }
 	.milestone-track {
-		background: rgba(255,255,255,0.07);
+		background: rgba(255,255,255,0.06);
 		border-radius: 4px;
 		height: 5px;
 		overflow: hidden;
@@ -59,6 +113,6 @@
 		background: linear-gradient(90deg, #818cf8, #a78bfa);
 		border-radius: 4px;
 		transition: width 0.7s ease;
-		box-shadow: 0 0 6px rgba(167,139,250,0.5);
+		box-shadow: 0 0 8px rgba(167,139,250,0.4);
 	}
 </style>

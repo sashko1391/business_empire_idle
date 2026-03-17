@@ -130,8 +130,8 @@
 	}
 	.combo-ring {
 		position: absolute;
-		width: 110px;
-		height: 110px;
+		width: 130px;
+		height: 130px;
 		pointer-events: none;
 		transform: rotate(-90deg);
 	}
@@ -161,9 +161,10 @@
 		to   { box-shadow: 0 0 36px rgba(248,113,113,0.9); }
 	}
 	.click-hint {
-		margin-top: 10px;
-		color: #888;
-		font-size: 0.9rem;
+		margin-top: 12px;
+		color: #666;
+		font-size: 0.82rem;
+		letter-spacing: 0.2px;
 	}
-	.combo-count { color: #f5a623; }
+	.combo-count { color: #f5a623; font-weight: 700; }
 </style>

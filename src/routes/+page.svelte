@@ -52,7 +52,7 @@
 	<WorkButton />
 
 	<div class="tabs">
-		{#each [['businesses','🏢 Businesses'],['upgrades','🔧 Upgrades'],['prestige','⭐ Prestige'],['achievements','🏆 Achievements']] as [tab, label]}
+		{#each [['businesses','🏢 Biz'],['upgrades','🔧 Upgrades'],['prestige','⭐ Prestige'],['achievements','🏆 Achs']] as [tab, label]}
 		<button class="tab-btn {activeTab === tab ? 'active' : ''}" onclick={() => activeTab = tab}>{label}</button>
 		{/each}
 	</div>
