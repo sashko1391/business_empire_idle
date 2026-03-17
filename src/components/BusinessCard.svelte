@@ -167,7 +167,7 @@
 		gap: 6px;
 		flex-wrap: wrap;
 	}
-	.business-name { font-weight: 700; font-size: 1rem; color: #e0e0e0; }
+	.business-name { font-weight: 700; font-size: 1rem; color: #ffffff; }
 
 	.tier-badge {
 		font-size: 0.65rem;
