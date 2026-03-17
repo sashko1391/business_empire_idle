@@ -1,0 +1,32 @@
+{
+  "name": "Business Empire Idle",
+  "short_name": "BizEmpire",
+  "description": "Build your business empire from a lemonade stand to an interplanetary trade network.",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#1c1c1e",
+  "theme_color": "#f5a623",
+  "orientation": "portrait",
+  "icons": [
+    {
+      "src": "images/icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "images/icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ],
+  "categories": ["games", "entertainment"],
+  "screenshots": [
+    {
+      "src": "images/lemonade_1.png",
+      "sizes": "1280x720",
+      "type": "image/png"
+    }
+  ]
+}
