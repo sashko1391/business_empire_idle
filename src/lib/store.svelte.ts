@@ -35,6 +35,12 @@ function seededRandom(seed: number) { const x = Math.sin(seed + 1) * 10000; retu
 function createGame() {
 	let state = $state<GameState>(defaultState());
 
+	// ── Buy quantity (global toggle) ─────────────────────────────────────────
+	let bulkBuyQty = $state<1 | 10 | 100 | 'max'>(1);
+
+	// ── Prestige ceremony ─────────────────────────────────────────────────────
+	let prestigeCeremonyVisible = $state(false);
+
 	// ── Derived ──────────────────────────────────────────────────────────────
 	const totalIncomePerSecond = $derived.by(() => {
 		const perks = state.prestigePerks;
@@ -49,6 +55,18 @@ function createGame() {
 	const rpWillEarn = $derived(Math.max(1, Math.floor(Math.sqrt(state.totalEarned / 1_000_000))));
 	const canPrestige = $derived(state.totalEarned >= PRESTIGE_THRESHOLD);
 	const bgStage = $derived(state.prestigeLevel >= 2 || state.totalEarned >= 10_000_000 ? 'endgame' : state.prestigeLevel >= 1 || state.totalEarned >= 100_000 ? 'mid' : 'early');
+
+	// ── Milestone progress ────────────────────────────────────────────────────
+	const milestoneNext = $derived(
+		nextMilestoneIdx < MILESTONES.length ? MILESTONES[nextMilestoneIdx] : null
+	);
+	const milestonePrev = $derived(
+		nextMilestoneIdx === 0 ? 0 : MILESTONES[nextMilestoneIdx - 1]
+	);
+	const milestoneProgress = $derived(
+		milestoneNext === null ? 100
+		: Math.min(100, (state.totalEarned - milestonePrev) / (milestoneNext - milestonePrev) * 100)
+	);
 
 	// Investment state
 	let investActive = $state(false);
@@ -82,6 +100,25 @@ function createGame() {
 
 	function getUpgradeCost(idx: number) {
 		return Math.floor(state.upgrades[idx].cost * state.prestigePerks.upgradeCostReduction);
+	}
+
+	function getBulkBusinessCost(idx: number, qty: number): number {
+		if (qty <= 0) return 0;
+		const b = state.businesses[idx];
+		const r = state.prestigePerks.costReduction;
+		const m = b.costMultiplier;
+		// Geometric series: baseCost * r * m^owned * (m^qty - 1) / (m - 1)
+		return Math.floor(b.baseCost * r * Math.pow(m, b.owned) * (Math.pow(m, qty) - 1) / (m - 1));
+	}
+
+	function getMaxAffordableBusiness(idx: number): number {
+		const b = state.businesses[idx];
+		const r = state.prestigePerks.costReduction;
+		const m = b.costMultiplier;
+		// Solve: baseCost * r * m^owned * (m^qty - 1) / (m - 1) <= money
+		const ratio = state.money * (m - 1) / (b.baseCost * r * Math.pow(m, b.owned));
+		if (ratio <= 0) return 0;
+		return Math.max(0, Math.floor(Math.log(ratio + 1) / Math.log(m)));
 	}
 
 	function getDailyEventMultiplier(): number {
@@ -258,6 +295,18 @@ function createGame() {
 		return true;
 	}
 
+	function buyBusinessBulk(idx: number, qty: number) {
+		if (qty <= 0) return false;
+		const cost = getBulkBusinessCost(idx, qty);
+		if (state.money < cost) return false;
+		state.money -= cost;
+		state.businesses[idx].owned += qty;
+		applySynergies();
+		checkAchievements();
+		playPurchaseSound();
+		return true;
+	}
+
 	function buyUpgrade(idx: number) {
 		const cost = getUpgradeCost(idx);
 		if (state.money < cost || state.upgrades[idx].purchased) return false;
@@ -270,7 +319,13 @@ function createGame() {
 		return true;
 	}
 
-	function doPrestige() {
+	function requestPrestige() {
+		if (!canPrestige) return;
+		prestigeCeremonyVisible = true;
+	}
+
+	function confirmPrestige() {
+		prestigeCeremonyVisible = false;
 		if (!canPrestige) return;
 		let rp = Math.max(1, Math.floor(Math.sqrt(state.totalEarned / 1_000_000)));
 		if (state.prestigePerks.managerCFO) rp = Math.ceil(rp * 1.1);
@@ -285,10 +340,15 @@ function createGame() {
 		newState.prestigePerks = state.prestigePerks;
 		newState.prestigeMultiplier = 1 + newLevel * 0.5;
 		state = newState;
+		nextMilestoneIdx = 0;
 		playPrestigeSound();
 		confettiBurst = {};
 		enqueueToast({ icon: '⭐', name: 'Prestige!', desc: `You earned ${rp} Reputation Points!` });
 		checkAchievements();
+	}
+
+	function cancelPrestige() {
+		prestigeCeremonyVisible = false;
 	}
 
 	function buyPrestigeUpgrade(id: string) {
@@ -436,10 +496,20 @@ function createGame() {
 		get offlineVisible() { return offlineVisible; },
 		get confettiBurst() { return confettiBurst; },
 		clearConfetti() { confettiBurst = null; },
+		// Bulk buy
+		get bulkBuyQty() { return bulkBuyQty; },
+		set bulkBuyQty(v) { bulkBuyQty = v; },
+		getBulkBusinessCost, getMaxAffordableBusiness, buyBusinessBulk,
+		// Prestige ceremony
+		get prestigeCeremonyVisible() { return prestigeCeremonyVisible; },
+		requestPrestige, confirmPrestige, cancelPrestige,
+		// Milestone progress
+		get milestoneNext() { return milestoneNext; },
+		get milestoneProgress() { return milestoneProgress; },
 		getBusinessCost, getUpgradeCost, getDailyEvent,
 		init, tick, save,
 		doWork, buyBusiness, buyUpgrade,
-		doPrestige, buyPrestigeUpgrade,
+		buyPrestigeUpgrade,
 		openScene, closeScene,
 		collectOffline,
 		resolveInvestment,

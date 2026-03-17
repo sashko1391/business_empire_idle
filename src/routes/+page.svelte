@@ -17,6 +17,8 @@
 	import AchievementToast from '$components/AchievementToast.svelte';
 	import Confetti from '$components/Confetti.svelte';
 	import NewsTicker from '$components/NewsTicker.svelte';
+	import BulkBuyToggle from '$components/BulkBuyToggle.svelte';
+	import PrestigeCeremonyModal from '$components/PrestigeCeremonyModal.svelte';
 
 	let confetti: Confetti;
 
@@ -60,6 +62,7 @@
 	<div>
 		<NewsTicker />
 		<DailyPanel />
+		<BulkBuyToggle />
 		{#each game.state.businesses as biz, i}
 			<BusinessCard business={biz} index={i} />
 		{/each}
@@ -113,7 +116,7 @@
 			{:else}
 				<p>Need ${formatNumber(1_000_000)} total earned to prestige</p>
 			{/if}
-			<button class="prestige-btn" onclick={game.doPrestige} disabled={!game.canPrestige}>
+			<button class="prestige-btn" onclick={game.requestPrestige} disabled={!game.canPrestige}>
 				⭐ Prestige Now
 			</button>
 		</div>
@@ -174,4 +177,5 @@
 <InvestmentModal />
 <OfflineModal />
 <AchievementToast />
+<PrestigeCeremonyModal />
 <Confetti bind:this={confetti} />
