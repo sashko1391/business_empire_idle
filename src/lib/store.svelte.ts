@@ -1,4 +1,3 @@
-import { base } from '$app/paths';
 import type { GameState, PrestigePerks, DailyState, AchievementToast } from '$lib/types';
 import { DEFAULT_BUSINESSES } from '$lib/data/businesses';
 import { DEFAULT_UPGRADES, UPGRADE_EFFECTS } from '$lib/data/upgrades';
@@ -60,6 +59,13 @@ function createGame() {
 	let toastQueue = $state<AchievementToast[]>([]);
 	let toastVisible = $state(false);
 	let currentToast = $state<AchievementToast | null>(null);
+
+	// Confetti / milestone trigger
+	let confettiBurst = $state<{ x?: number; y?: number } | null>(null);
+
+	// Milestone thresholds
+	const MILESTONES = [1_000, 10_000, 100_000, 1_000_000, 1_000_000_000];
+	let nextMilestoneIdx = $state(0);
 
 	// Scene modal
 	let sceneIndex = $state<number | null>(null);
@@ -280,6 +286,7 @@ function createGame() {
 		newState.prestigeMultiplier = 1 + newLevel * 0.5;
 		state = newState;
 		playPrestigeSound();
+		confettiBurst = {};
 		enqueueToast({ icon: '⭐', name: 'Prestige!', desc: `You earned ${rp} Reputation Points!` });
 		checkAchievements();
 	}
@@ -391,6 +398,12 @@ function createGame() {
 			if (investCooldown >= 180) { investCooldown = 0; triggerInvestment(); }
 		}
 
+		// Milestone confetti
+		while (nextMilestoneIdx < MILESTONES.length && state.totalEarned >= MILESTONES[nextMilestoneIdx]) {
+			confettiBurst = {};
+			nextMilestoneIdx++;
+		}
+
 		// Daily checks every 60 ticks
 		if (tickCount % 60 === 0) { initDaily(); checkContractProgress(); checkAchievements(); }
 
@@ -421,6 +434,8 @@ function createGame() {
 		get sceneIndex() { return sceneIndex; },
 		get offlineEarnings() { return offlineEarnings; },
 		get offlineVisible() { return offlineVisible; },
+		get confettiBurst() { return confettiBurst; },
+		clearConfetti() { confettiBurst = null; },
 		getBusinessCost, getUpgradeCost, getDailyEvent,
 		init, tick, save,
 		doWork, buyBusiness, buyUpgrade,

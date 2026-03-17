@@ -5,6 +5,22 @@
 	import { formatNumber } from '$lib/format';
 	import type { FloatingNumber } from '$lib/types';
 
+	// Work button label evolves with progress
+	function getWorkLabel() {
+		const earned = game.state.totalEarned;
+		const prestige = game.state.prestigeLevel;
+		if (prestige >= 4) return '🌌 Dominate Galaxy';
+		if (prestige >= 3) return '🏢 Run Corporation';
+		if (prestige >= 2) return '📈 Move Markets';
+		if (prestige >= 1) return '💼 Close Deal';
+		if (earned >= 1_000_000) return '🚀 Launch Campaign';
+		if (earned >= 100_000)   return '🤝 Sign Client';
+		if (earned >= 10_000)    return '📋 Run Operations';
+		if (earned >= 1_000)     return '💪 Hustle Hard';
+		return '💪 WORK';
+	}
+	const workLabel = $derived(getWorkLabel());
+
 	// Spring animation for button scale
 	const scale = spring(1, { stiffness: 0.4, damping: 0.3 });
 
@@ -56,7 +72,7 @@
 		style="transform: scale({$scale})"
 		onclick={handleClick}
 	>
-		💪 WORK
+		{workLabel}
 	</button>
 
 	<p style="margin-top:10px;color:#888;font-size:0.9rem">

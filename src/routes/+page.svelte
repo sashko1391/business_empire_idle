@@ -15,6 +15,18 @@
 	import InvestmentModal from '$components/InvestmentModal.svelte';
 	import OfflineModal from '$components/OfflineModal.svelte';
 	import AchievementToast from '$components/AchievementToast.svelte';
+	import Confetti from '$components/Confetti.svelte';
+	import NewsTicker from '$components/NewsTicker.svelte';
+
+	let confetti: Confetti;
+
+	// Watch for confetti bursts from store
+	$effect(() => {
+		if (game.confettiBurst !== null) {
+			confetti?.burst();
+			game.clearConfetti();
+		}
+	});
 
 	let activeTab = $state('businesses');
 
@@ -46,6 +58,7 @@
 	<!-- BUSINESSES TAB -->
 	{#if activeTab === 'businesses'}
 	<div>
+		<NewsTicker />
 		<DailyPanel />
 		{#each game.state.businesses as biz, i}
 			<BusinessCard business={biz} index={i} />
@@ -161,3 +174,4 @@
 <InvestmentModal />
 <OfflineModal />
 <AchievementToast />
+<Confetti bind:this={confetti} />
