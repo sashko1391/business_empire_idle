@@ -47,7 +47,7 @@
 
 <GameBackground />
 
-<div class="container">
+<div class="container {game.shakeActive ? 'shake' : ''}">
 	<Header />
 	<WorkButton />
 

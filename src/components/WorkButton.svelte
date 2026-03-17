@@ -27,13 +27,23 @@
 	// Click combo
 	let comboClicks = $state(0);
 	let comboTimer: ReturnType<typeof setTimeout> | null = null;
-	let comboMultiplier = $derived(
+	const COMBO_MAX = 10;
+	const comboMultiplier = $derived(
 		comboClicks >= 10 ? 5 :
 		comboClicks >= 5  ? 2 : 1
 	);
-	let comboLabel = $derived(
+	const comboLabel = $derived(
 		comboClicks >= 10 ? '🔥 COMBO ×5!' :
 		comboClicks >= 5  ? '⚡ COMBO ×2!' : ''
+	);
+	// Ring fill: 0–1
+	const comboRingPct = $derived(Math.min(comboClicks / COMBO_MAX, 1));
+	// SVG circle: circumference of r=46 ≈ 289
+	const CIRC = 2 * Math.PI * 46;
+	const ringDash = $derived(comboRingPct * CIRC);
+	const ringColor = $derived(
+		comboClicks >= 10 ? '#f87171' :
+		comboClicks >= 5  ? '#f5a623' : '#4ade80'
 	);
 
 	// Floating numbers
@@ -41,15 +51,12 @@
 	let nextId = 0;
 
 	function handleClick(e: MouseEvent) {
-		// Button spring press
 		scale.set(0.88).then(() => scale.set(1));
 
-		// Combo tracking
 		comboClicks++;
 		if (comboTimer) clearTimeout(comboTimer);
 		comboTimer = setTimeout(() => { comboClicks = 0; }, 3000);
 
-		// Earn money (with combo multiplier)
 		const result = game.doWork(e.clientX, e.clientY);
 		const earned = parseFloat(result.value) * comboMultiplier;
 		const displayVal = comboMultiplier > 1
@@ -67,17 +74,32 @@
 	<div class="combo-label" transition:fly={{ y: -10, duration: 200 }}>{comboLabel}</div>
 	{/if}
 
-	<button
-		class="work-btn"
-		style="transform: scale({$scale})"
-		onclick={handleClick}
-	>
-		{workLabel}
-	</button>
+	<div class="btn-wrap">
+		<!-- Combo ring -->
+		<svg class="combo-ring" viewBox="0 0 100 100" aria-hidden="true">
+			<circle class="ring-bg" cx="50" cy="50" r="46" />
+			<circle
+				class="ring-fill"
+				cx="50" cy="50" r="46"
+				stroke={ringColor}
+				stroke-dasharray="{ringDash} {CIRC}"
+				stroke-dashoffset="0"
+				style="transition: stroke-dasharray 0.15s ease, stroke 0.3s ease"
+			/>
+		</svg>
 
-	<p style="margin-top:10px;color:#888;font-size:0.9rem">
+		<button
+			class="work-btn {comboClicks >= 10 ? 'combo-max' : comboClicks >= 5 ? 'combo-mid' : ''}"
+			style="transform: scale({$scale})"
+			onclick={handleClick}
+		>
+			{workLabel}
+		</button>
+	</div>
+
+	<p class="click-hint">
 		+${formatNumber(game.state.clickPower * comboMultiplier)} per click
-		{#if comboClicks > 1}<span style="color:#f5a623"> ({comboClicks} combo)</span>{/if}
+		{#if comboClicks > 1}<span class="combo-count"> ({comboClicks} combo)</span>{/if}
 	</p>
 </div>
 
@@ -100,8 +122,48 @@
 		margin-bottom: 6px;
 		letter-spacing: 1px;
 	}
+	.btn-wrap {
+		position: relative;
+		display: inline-flex;
+		align-items: center;
+		justify-content: center;
+	}
+	.combo-ring {
+		position: absolute;
+		width: 110px;
+		height: 110px;
+		pointer-events: none;
+		transform: rotate(-90deg);
+	}
+	.ring-bg {
+		fill: none;
+		stroke: rgba(255,255,255,0.07);
+		stroke-width: 3;
+	}
+	.ring-fill {
+		fill: none;
+		stroke-width: 3;
+		stroke-linecap: round;
+	}
 	.work-btn {
-		transition: box-shadow 0.1s;
+		transition: box-shadow 0.15s;
 		transform-origin: center;
 	}
+	.work-btn.combo-mid {
+		box-shadow: 0 0 18px rgba(245,166,35,0.5);
+	}
+	.work-btn.combo-max {
+		box-shadow: 0 0 28px rgba(248,113,113,0.7);
+		animation: pulse-max 0.6s ease-in-out infinite alternate;
+	}
+	@keyframes pulse-max {
+		from { box-shadow: 0 0 20px rgba(248,113,113,0.5); }
+		to   { box-shadow: 0 0 36px rgba(248,113,113,0.9); }
+	}
+	.click-hint {
+		margin-top: 10px;
+		color: #888;
+		font-size: 0.9rem;
+	}
+	.combo-count { color: #f5a623; }
 </style>

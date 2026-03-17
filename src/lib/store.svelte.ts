@@ -41,6 +41,15 @@ function createGame() {
 	// ── Prestige ceremony ─────────────────────────────────────────────────────
 	let prestigeCeremonyVisible = $state(false);
 
+	// ── Synergy tracking (for activation toasts) ──────────────────────────────
+	const activeSynergyIds = new Set<string>();
+
+	// ── Epoch tracking (for narrative toasts) ────────────────────────────────
+	let lastBgStage = 'early';
+
+	// ── Screen shake ──────────────────────────────────────────────────────────
+	let shakeActive = $state(false);
+
 	// ── Derived ──────────────────────────────────────────────────────────────
 	const totalIncomePerSecond = $derived.by(() => {
 		const perks = state.prestigePerks;
@@ -154,8 +163,31 @@ function createGame() {
 			if (a && b && a.owned >= 1 && b.owned >= 1) {
 				a.synergyMultiplier *= (1 + syn.bonus);
 				b.synergyMultiplier *= (1 + syn.bonus);
+				// Toast on first activation
+				if (!activeSynergyIds.has(syn.name)) {
+					activeSynergyIds.add(syn.name);
+					enqueueToast({ icon: '⚡', name: syn.name, desc: syn.desc });
+				}
 			}
 		});
+	}
+
+	function triggerShake() {
+		shakeActive = true;
+		setTimeout(() => { shakeActive = false; }, 500);
+	}
+
+	function checkEpochNarrative() {
+		const stage = bgStage;
+		if (stage !== lastBgStage) {
+			lastBgStage = stage;
+			const NARRATIVES: Record<string, { icon: string; name: string; desc: string }> = {
+				mid:     { icon: '🏢', name: 'You left the garage behind', desc: 'Welcome to the corporate world' },
+				endgame: { icon: '🌌', name: 'You reached the top floor', desc: 'The penthouse is yours. Now conquer the universe.' },
+			};
+			const msg = NARRATIVES[stage];
+			if (msg) { enqueueToast(msg); triggerShake(); }
+		}
 	}
 
 	function checkAchievements() {
@@ -304,6 +336,7 @@ function createGame() {
 		applySynergies();
 		checkAchievements();
 		playPurchaseSound();
+		if (cost >= 10_000) triggerShake();
 		return true;
 	}
 
@@ -458,11 +491,15 @@ function createGame() {
 			if (investCooldown >= 180) { investCooldown = 0; triggerInvestment(); }
 		}
 
-		// Milestone confetti
+		// Milestone confetti + shake
 		while (nextMilestoneIdx < MILESTONES.length && state.totalEarned >= MILESTONES[nextMilestoneIdx]) {
 			confettiBurst = {};
+			triggerShake();
 			nextMilestoneIdx++;
 		}
+
+		// Epoch narrative
+		checkEpochNarrative();
 
 		// Daily checks every 60 ticks
 		if (tickCount % 60 === 0) { initDaily(); checkContractProgress(); checkAchievements(); }
@@ -496,6 +533,7 @@ function createGame() {
 		get offlineVisible() { return offlineVisible; },
 		get confettiBurst() { return confettiBurst; },
 		clearConfetti() { confettiBurst = null; },
+		get shakeActive() { return shakeActive; },
 		// Bulk buy
 		get bulkBuyQty() { return bulkBuyQty; },
 		set bulkBuyQty(v) { bulkBuyQty = v; },
