@@ -1762,6 +1762,15 @@
             
             if (!gameState.businesses || gameState.businesses.length === 0) {
                 gameState.businesses = JSON.parse(JSON.stringify(DEFAULT_BUSINESSES));
+            } else {
+                // Sync fields from defaults that may be missing in saved state
+                gameState.businesses.forEach((biz, i) => {
+                    const def = DEFAULT_BUSINESSES[i];
+                    if (def) {
+                        if (!biz.sceneUrl) biz.sceneUrl = def.sceneUrl;
+                        if (!biz.id) biz.id = def.id;
+                    }
+                });
             }
             
             if (!gameState.upgrades || gameState.upgrades.length === 0) {
