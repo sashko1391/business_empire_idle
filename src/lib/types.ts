@@ -1,3 +1,10 @@
+export interface BusinessTier {
+	minOwned: number;  // owned count to reach this tier
+	name: string;      // tier name
+	bonus: number;     // income multiplier at this tier (stacks on base)
+	label: string;     // short tier label e.g. "Lvl 2"
+}
+
 export interface Business {
 	id: string;
 	name: string;
@@ -11,6 +18,7 @@ export interface Business {
 	unlockCost: number;
 	unlockPrestige: number;
 	sceneUrl: string;
+	tiers: BusinessTier[];
 }
 
 export interface Upgrade {

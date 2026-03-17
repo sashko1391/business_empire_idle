@@ -166,6 +166,19 @@ h1 { text-align: center; margin-bottom: 10px; color: #f5a623; font-size: 2rem; }
 .scene-overlay {
     position: absolute; top: 0; left: 0; width: 100%; height: 100%;
     background: linear-gradient(to bottom, rgba(0,0,0,0.3) 0%, rgba(0,0,0,0.1) 30%, rgba(0,0,0,0.1) 70%, rgba(0,0,0,0.8) 100%);
+    transition: background 0.8s ease;
+}
+/* Tier 2: golden tint */
+.scene-overlay.scene-tier-2 {
+    background: linear-gradient(to bottom,
+        rgba(80,50,0,0.35) 0%, rgba(245,166,35,0.08) 30%,
+        rgba(245,166,35,0.05) 70%, rgba(0,0,0,0.85) 100%);
+}
+/* Tier 3: cosmic purple */
+.scene-overlay.scene-tier-3 {
+    background: linear-gradient(to bottom,
+        rgba(60,0,80,0.45) 0%, rgba(167,139,250,0.12) 30%,
+        rgba(167,139,250,0.08) 70%, rgba(0,0,0,0.88) 100%);
 }
 .scene-content { position: relative; z-index: 10; display: flex; flex-direction: column; height: 100%; padding: 20px; }
 .scene-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; }
@@ -185,6 +198,14 @@ h1 { text-align: center; margin-bottom: 10px; color: #f5a623; font-size: 2rem; }
     font-size: 1.2rem; font-weight: bold; cursor: pointer; margin-top: 15px;
 }
 .scene-buy-btn:disabled { opacity: 0.4; cursor: not-allowed; }
+.scene-tier-badge {
+    font-size: 0.65rem; font-weight: bold; padding: 2px 7px;
+    border-radius: 5px; vertical-align: middle; margin-left: 8px;
+}
+.scene-tier-badge-1 { background: rgba(255,255,255,0.1); color: #aaa; }
+.scene-tier-badge-2 { background: rgba(245,166,35,0.25); color: #f5a623; border: 1px solid rgba(245,166,35,0.5); }
+.scene-tier-badge-3 { background: rgba(167,139,250,0.25); color: #a78bfa; border: 1px solid rgba(167,139,250,0.6); }
+.tier-val { color: #a78bfa !important; }
 
 /* Offline modal */
 .offline-modal {

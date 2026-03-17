@@ -2,7 +2,6 @@
 	import { fly } from 'svelte/transition';
 	import { tweened } from 'svelte/motion';
 	import { cubicOut } from 'svelte/easing';
-	import { base } from '$app/paths';
 	import { game } from '$lib/store.svelte';
 	import { formatNumber } from '$lib/format';
 	import { SYNERGIES } from '$lib/data/synergies';
@@ -10,7 +9,12 @@
 
 	let { business, index }: { business: Business; index: number } = $props();
 
-	const income = $derived(business.baseIncome * business.incomeMultiplier * game.state.prestigeMultiplier);
+	const income = $derived(
+		business.baseIncome
+		* business.incomeMultiplier
+		* game.state.prestigeMultiplier
+		* game.getBusinessTierBonus(business)
+	);
 	const unlocked = $derived(
 		business.unlockPrestige <= game.state.prestigeLevel &&
 		business.unlockCost <= game.state.totalEarned
@@ -40,12 +44,17 @@
 		return other && other.owned >= 1 && business.owned >= 1;
 	}));
 
-	// Milestone badge: glow at 10, 25, 50, 100
-	const MILESTONES_OWN = [10, 25, 50, 100];
-	const nextOwnMilestone = $derived(MILESTONES_OWN.find(m => business.owned < m) ?? null);
-	const ownProgress = $derived(
-		nextOwnMilestone
-			? Math.min(100, (business.owned / nextOwnMilestone) * 100)
+	// Tier
+	const tierIdx  = $derived(game.getBusinessTierIndex(business));
+	const tier      = $derived(business.tiers?.[tierIdx] ?? null);
+	const nextTier  = $derived(business.tiers?.[tierIdx + 1] ?? null);
+	const tierClass = $derived(
+		tierIdx >= 2 ? 'tier-3' :
+		tierIdx >= 1 ? 'tier-2' : ''
+	);
+	const tierProgress = $derived(
+		nextTier
+			? Math.min(100, (business.owned / nextTier.minOwned) * 100)
 			: 100
 	);
 
@@ -64,7 +73,7 @@
 
 {#if unlocked}
 <div
-	class="business-card has-scene glass {justBought ? 'purchase-flash' : ''}"
+	class="business-card has-scene glass {tierClass} {justBought ? 'purchase-flash' : ''}"
 	onclick={view}
 	role="button"
 	tabindex="0"
@@ -73,19 +82,32 @@
 >
 	<div class="business-icon">{business.icon}</div>
 	<div class="business-info">
-		<div class="business-name">{business.name}</div>
+		<div class="name-row">
+			<span class="business-name">{tier?.name ?? business.name}</span>
+			{#if tier}
+			<span class="tier-badge tier-badge-{tierIdx + 1}">{tier.label}</span>
+			{/if}
+		</div>
 		<div class="business-stats">
 			<span class="owned-count">{business.owned}</span> owned |
 			<span class="income-val">${formatNumber(income * business.owned)}/sec</span>
+			{#if tier && tier.bonus > 1}
+			<span class="tier-bonus">×{tier.bonus}</span>
+			{/if}
 		</div>
 		{#if activeSyns.length}
 		<div class="syn-badge">⚡ {activeSyns.map(s => s.desc).join(' · ')}</div>
 		{/if}
-		{#if nextOwnMilestone}
-		<div class="own-progress-track">
-			<div class="own-progress-fill" style="width:{ownProgress}%"></div>
+		<!-- Tier progress bar -->
+		{#if nextTier}
+		<div class="tier-progress-wrap">
+			<div class="tier-progress-track">
+				<div class="tier-progress-fill {tierClass}" style="width:{tierProgress}%"></div>
+			</div>
+			<span class="tier-progress-label">{business.owned}/{nextTier.minOwned} → {nextTier.name}</span>
 		</div>
-		<div class="own-progress-label">{business.owned}/{nextOwnMilestone}</div>
+		{:else if tier}
+		<div class="tier-maxed">✦ Max Tier</div>
 		{/if}
 	</div>
 	<div class="business-actions">
@@ -93,7 +115,7 @@
 		<button class="view-btn" onclick={(e) => { e.stopPropagation(); view(); }}>👁</button>
 		{/if}
 		<button class="buy-btn" onclick={buy} disabled={!canAfford}>
-			{game.bulkBuyQty === 'max' ? `×${qty}` : `×${qty}`}<br>${formatNumber(cost)}
+			×{qty}<br>${formatNumber(cost)}
 		</button>
 	</div>
 </div>
@@ -128,32 +150,86 @@
 		backdrop-filter: blur(8px);
 		-webkit-backdrop-filter: blur(8px);
 		border: 1px solid rgba(255,255,255,0.1);
+		transition: border-color 0.4s ease, box-shadow 0.4s ease;
 	}
+	/* Tier 2: gold */
+	.tier-2 {
+		border-color: rgba(245,166,35,0.45) !important;
+		box-shadow: 0 0 14px rgba(245,166,35,0.12);
+	}
+	/* Tier 3: purple cosmic */
+	.tier-3 {
+		border-color: rgba(167,139,250,0.55) !important;
+		box-shadow: 0 0 20px rgba(167,139,250,0.18), inset 0 0 30px rgba(167,139,250,0.04);
+	}
+
+	.name-row {
+		display: flex;
+		align-items: center;
+		gap: 6px;
+		flex-wrap: wrap;
+	}
+	.business-name { font-weight: bold; font-size: 0.95rem; }
+
+	.tier-badge {
+		font-size: 0.65rem;
+		font-weight: bold;
+		padding: 1px 6px;
+		border-radius: 4px;
+		letter-spacing: 0.5px;
+		flex-shrink: 0;
+	}
+	.tier-badge-1 { background: rgba(255,255,255,0.1); color: #aaa; }
+	.tier-badge-2 { background: rgba(245,166,35,0.2); color: #f5a623; border: 1px solid rgba(245,166,35,0.4); }
+	.tier-badge-3 { background: rgba(167,139,250,0.2); color: #a78bfa; border: 1px solid rgba(167,139,250,0.5); }
+
 	.owned-count { color: #f5a623; font-weight: bold; }
 	.income-val  { color: #4ade80; }
+	.tier-bonus  { color: #a78bfa; font-size: 0.72rem; font-weight: bold; }
+
 	.syn-badge {
 		color: #4ade80;
 		font-size: 0.72rem;
 		margin-top: 2px;
 	}
-	.own-progress-track {
-		margin-top: 4px;
+
+	.tier-progress-wrap {
+		margin-top: 5px;
+	}
+	.tier-progress-track {
 		background: rgba(255,255,255,0.07);
 		border-radius: 3px;
-		height: 3px;
+		height: 4px;
 		overflow: hidden;
 	}
-	.own-progress-fill {
+	.tier-progress-fill {
 		height: 100%;
-		background: linear-gradient(90deg, #818cf8, #6366f1);
 		border-radius: 3px;
 		transition: width 0.6s ease;
+		background: linear-gradient(90deg, #818cf8, #6366f1);
 	}
-	.own-progress-label {
-		font-size: 0.65rem;
-		color: #818cf8;
+	.tier-progress-fill.tier-2 {
+		background: linear-gradient(90deg, #f5a623, #fbbf24);
+	}
+	.tier-progress-fill.tier-3 {
+		background: linear-gradient(90deg, #a78bfa, #e879f9);
+	}
+	.tier-progress-label {
+		font-size: 0.62rem;
+		color: #666;
 		margin-top: 1px;
+		display: block;
+		white-space: nowrap;
+		overflow: hidden;
+		text-overflow: ellipsis;
 	}
+	.tier-maxed {
+		font-size: 0.68rem;
+		color: #a78bfa;
+		margin-top: 3px;
+		letter-spacing: 0.5px;
+	}
+
 	.progress-track {
 		position: relative;
 		margin-top: 6px;

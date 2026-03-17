@@ -13,7 +13,12 @@ export const DEFAULT_BUSINESSES: Business[] = [
 		synergyMultiplier: 1,
 		unlockCost: 0,
 		unlockPrestige: 0,
-		sceneUrl: 'images/lemonade_stand.jpeg'
+		sceneUrl: 'images/lemonade_stand.jpeg',
+		tiers: [
+			{ minOwned: 1,  name: 'Lemonade Stand',  bonus: 1,  label: 'I'   },
+			{ minOwned: 10, name: 'Lemonade Bar',     bonus: 2,  label: 'II'  },
+			{ minOwned: 25, name: 'Lemonade Empire',  bonus: 5,  label: 'III' },
+		],
 	},
 	{
 		id: 'coffee',
@@ -27,7 +32,12 @@ export const DEFAULT_BUSINESSES: Business[] = [
 		synergyMultiplier: 1,
 		unlockCost: 50,
 		unlockPrestige: 0,
-		sceneUrl: 'images/coffee_shop.jpeg'
+		sceneUrl: 'images/coffee_shop.jpeg',
+		tiers: [
+			{ minOwned: 1,  name: 'Coffee Shop',        bonus: 1, label: 'I'   },
+			{ minOwned: 10, name: 'Coffee Chain',        bonus: 2, label: 'II'  },
+			{ minOwned: 25, name: 'Coffee Corporation',  bonus: 5, label: 'III' },
+		],
 	},
 	{
 		id: 'restaurant',
@@ -41,7 +51,12 @@ export const DEFAULT_BUSINESSES: Business[] = [
 		synergyMultiplier: 1,
 		unlockCost: 500,
 		unlockPrestige: 0,
-		sceneUrl: 'images/restaurant.jpeg'
+		sceneUrl: 'images/restaurant.jpeg',
+		tiers: [
+			{ minOwned: 1,  name: 'Small Restaurant',  bonus: 1, label: 'I'   },
+			{ minOwned: 10, name: 'Restaurant Chain',   bonus: 2, label: 'II'  },
+			{ minOwned: 25, name: 'Culinary Empire',    bonus: 5, label: 'III' },
+		],
 	},
 	{
 		id: 'delivery',
@@ -55,7 +70,12 @@ export const DEFAULT_BUSINESSES: Business[] = [
 		synergyMultiplier: 1,
 		unlockCost: 2000,
 		unlockPrestige: 0,
-		sceneUrl: 'images/food_delivery.jpeg'
+		sceneUrl: 'images/food_delivery.jpeg',
+		tiers: [
+			{ minOwned: 1,  name: 'Food Delivery',      bonus: 1, label: 'I'   },
+			{ minOwned: 10, name: 'Delivery Network',    bonus: 2, label: 'II'  },
+			{ minOwned: 25, name: 'Logistics Empire',    bonus: 5, label: 'III' },
+		],
 	},
 	{
 		id: 'fitness',
@@ -69,7 +89,12 @@ export const DEFAULT_BUSINESSES: Business[] = [
 		synergyMultiplier: 1,
 		unlockCost: 8000,
 		unlockPrestige: 0,
-		sceneUrl: 'images/fitness_club.jpeg'
+		sceneUrl: 'images/fitness_club.jpeg',
+		tiers: [
+			{ minOwned: 1,  name: 'Fitness Club',          bonus: 1, label: 'I'   },
+			{ minOwned: 10, name: 'Fitness Chain',          bonus: 2, label: 'II'  },
+			{ minOwned: 25, name: 'Wellness Corporation',   bonus: 5, label: 'III' },
+		],
 	},
 	{
 		id: 'carwash',
@@ -83,7 +108,12 @@ export const DEFAULT_BUSINESSES: Business[] = [
 		synergyMultiplier: 1,
 		unlockCost: 15000,
 		unlockPrestige: 0,
-		sceneUrl: 'images/car_wash.jpeg'
+		sceneUrl: 'images/car_wash.jpeg',
+		tiers: [
+			{ minOwned: 1,  name: 'Car Wash',           bonus: 1, label: 'I'   },
+			{ minOwned: 10, name: 'Car Wash Network',    bonus: 2, label: 'II'  },
+			{ minOwned: 25, name: 'Auto Care Empire',    bonus: 5, label: 'III' },
+		],
 	},
 	{
 		id: 'itcompany',
@@ -97,7 +127,12 @@ export const DEFAULT_BUSINESSES: Business[] = [
 		synergyMultiplier: 1,
 		unlockCost: 50000,
 		unlockPrestige: 0,
-		sceneUrl: 'images/it_company.jpeg'
+		sceneUrl: 'images/it_company.jpeg',
+		tiers: [
+			{ minOwned: 1,  name: 'IT Company',      bonus: 1, label: 'I'   },
+			{ minOwned: 10, name: 'IT Corporation',   bonus: 2, label: 'II'  },
+			{ minOwned: 25, name: 'Tech Giant',       bonus: 5, label: 'III' },
+		],
 	},
 	{
 		id: 'media',
@@ -111,7 +146,12 @@ export const DEFAULT_BUSINESSES: Business[] = [
 		synergyMultiplier: 1,
 		unlockCost: 200000,
 		unlockPrestige: 0,
-		sceneUrl: 'images/media_agency.jpeg'
+		sceneUrl: 'images/media_agency.jpeg',
+		tiers: [
+			{ minOwned: 1,  name: 'Media Agency',       bonus: 1, label: 'I'   },
+			{ minOwned: 10, name: 'Media Empire',        bonus: 2, label: 'II'  },
+			{ minOwned: 25, name: 'Media Conglomerate',  bonus: 5, label: 'III' },
+		],
 	},
 	{
 		id: 'bank',
@@ -125,7 +165,12 @@ export const DEFAULT_BUSINESSES: Business[] = [
 		synergyMultiplier: 1,
 		unlockCost: 1000000,
 		unlockPrestige: 1,
-		sceneUrl: 'images/bank.jpeg'
+		sceneUrl: 'images/bank.jpeg',
+		tiers: [
+			{ minOwned: 1,  name: 'Private Bank',       bonus: 1, label: 'I'   },
+			{ minOwned: 10, name: 'Banking Group',       bonus: 2, label: 'II'  },
+			{ minOwned: 25, name: 'Financial Empire',    bonus: 5, label: 'III' },
+		],
 	},
 	{
 		id: 'realestate',
@@ -139,7 +184,12 @@ export const DEFAULT_BUSINESSES: Business[] = [
 		synergyMultiplier: 1,
 		unlockCost: 5000000,
 		unlockPrestige: 1,
-		sceneUrl: 'images/real_estate.jpeg'
+		sceneUrl: 'images/real_estate.jpeg',
+		tiers: [
+			{ minOwned: 1,  name: 'Real Estate',           bonus: 1, label: 'I'   },
+			{ minOwned: 10, name: 'Property Empire',        bonus: 2, label: 'II'  },
+			{ minOwned: 25, name: 'Real Estate Monopoly',   bonus: 5, label: 'III' },
+		],
 	},
 	{
 		id: 'fund',
@@ -153,7 +203,12 @@ export const DEFAULT_BUSINESSES: Business[] = [
 		synergyMultiplier: 1,
 		unlockCost: 25000000,
 		unlockPrestige: 2,
-		sceneUrl: 'images/investment_fund.jpeg'
+		sceneUrl: 'images/investment_fund.jpeg',
+		tiers: [
+			{ minOwned: 1,  name: 'Investment Fund',   bonus: 1, label: 'I'   },
+			{ minOwned: 10, name: 'Hedge Fund',         bonus: 2, label: 'II'  },
+			{ minOwned: 25, name: 'Investment Empire',  bonus: 5, label: 'III' },
+		],
 	},
 	{
 		id: 'spacemining',
@@ -167,7 +222,12 @@ export const DEFAULT_BUSINESSES: Business[] = [
 		synergyMultiplier: 1,
 		unlockCost: 100000000,
 		unlockPrestige: 3,
-		sceneUrl: 'images/space_mining.jpeg'
+		sceneUrl: 'images/space_mining.jpeg',
+		tiers: [
+			{ minOwned: 1,  name: 'Space Mining Corp',  bonus: 1, label: 'I'   },
+			{ minOwned: 10, name: 'Space Corporation',   bonus: 2, label: 'II'  },
+			{ minOwned: 25, name: 'Galactic Mining',     bonus: 5, label: 'III' },
+		],
 	},
 	{
 		id: 'interplanetary',
@@ -181,6 +241,11 @@ export const DEFAULT_BUSINESSES: Business[] = [
 		synergyMultiplier: 1,
 		unlockCost: 1000000000,
 		unlockPrestige: 4,
-		sceneUrl: 'images/interplanetary.jpeg'
-	}
+		sceneUrl: 'images/interplanetary.jpeg',
+		tiers: [
+			{ minOwned: 1,  name: 'Interplanetary Trade',  bonus: 1, label: 'I'   },
+			{ minOwned: 10, name: 'Trade Federation',       bonus: 2, label: 'II'  },
+			{ minOwned: 25, name: 'Galactic Commerce',      bonus: 5, label: 'III' },
+		],
+	},
 ];

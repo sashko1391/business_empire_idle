@@ -41,6 +41,9 @@ function createGame() {
 	// ── Prestige ceremony ─────────────────────────────────────────────────────
 	let prestigeCeremonyVisible = $state(false);
 
+	// ── Tier tracking (for tier-up toasts) ───────────────────────────────────
+	const businessTierMap = new Map<string, number>(); // id → last known tier index
+
 	// ── Synergy tracking (for activation toasts) ──────────────────────────────
 	const activeSynergyIds = new Set<string>();
 
@@ -56,7 +59,7 @@ function createGame() {
 		const dailyMult = getDailyEventMultiplier();
 		const brandBonus = perks.managerBrand ? 1 + state.prestigeLevel * 0.05 : 1;
 		const base = state.businesses.reduce((sum, b) => {
-			return sum + b.baseIncome * b.incomeMultiplier * b.synergyMultiplier * b.owned;
+			return sum + b.baseIncome * b.incomeMultiplier * b.synergyMultiplier * getBusinessTierBonus(b) * b.owned;
 		}, 0);
 		return (base + state.bonusIncome) * state.globalMultiplier * state.prestigeMultiplier * perks.globalMultiplier * dailyMult * brandBonus;
 	});
@@ -128,6 +131,40 @@ function createGame() {
 		const ratio = state.money * (m - 1) / (b.baseCost * r * Math.pow(m, b.owned));
 		if (ratio <= 0) return 0;
 		return Math.max(0, Math.floor(Math.log(ratio + 1) / Math.log(m)));
+	}
+
+	function getBusinessTierIndex(biz: typeof state.businesses[0]): number {
+		if (!biz.tiers?.length) return 0;
+		let tier = -1;
+		for (let i = 0; i < biz.tiers.length; i++) {
+			if (biz.owned >= biz.tiers[i].minOwned) tier = i;
+		}
+		return tier;
+	}
+
+	function getBusinessTierBonus(biz: typeof state.businesses[0]): number {
+		const idx = getBusinessTierIndex(biz);
+		if (idx < 0 || !biz.tiers?.length) return 1;
+		return biz.tiers[idx].bonus;
+	}
+
+	function checkTierUps() {
+		state.businesses.forEach(biz => {
+			const tierIdx = getBusinessTierIndex(biz);
+			if (tierIdx < 0) return;
+			const prev = businessTierMap.get(biz.id) ?? -1;
+			if (tierIdx > prev) {
+				businessTierMap.set(biz.id, tierIdx);
+				if (prev >= 0) { // don't toast on initial load
+					const tier = biz.tiers[tierIdx];
+					enqueueToast({ icon: biz.icon, name: `${tier.name} unlocked!`, desc: `${biz.icon} income ×${tier.bonus} — Tier ${tier.label}` });
+					confettiBurst = {};
+					triggerShake();
+				} else {
+					businessTierMap.set(biz.id, tierIdx);
+				}
+			}
+		});
 	}
 
 	function getDailyEventMultiplier(): number {
@@ -283,10 +320,14 @@ function createGame() {
 		try {
 			const parsed = JSON.parse(raw) as Partial<GameState>;
 			state = { ...defaultState(), ...parsed };
-			// Sync sceneUrl and id from defaults
+			// Sync immutable fields from defaults (forward compat for new fields)
 			state.businesses.forEach((biz, i) => {
 				const def = DEFAULT_BUSINESSES[i];
-				if (def) { if (!biz.sceneUrl) biz.sceneUrl = def.sceneUrl; if (!biz.id) biz.id = def.id; }
+				if (def) {
+					if (!biz.sceneUrl) biz.sceneUrl = def.sceneUrl;
+					if (!biz.id)       biz.id       = def.id;
+					if (!biz.tiers?.length) biz.tiers = def.tiers;
+				}
 			});
 			if (!state.prestigePerks) state.prestigePerks = defaultPerks();
 			if (!state.prestigeShopPurchased) state.prestigeShopPurchased = {};
@@ -334,6 +375,7 @@ function createGame() {
 		state.money -= cost;
 		state.businesses[idx].owned += qty;
 		applySynergies();
+		checkTierUps();
 		checkAchievements();
 		playPurchaseSound();
 		if (cost >= 10_000) triggerShake();
@@ -512,6 +554,11 @@ function createGame() {
 		load();
 		calculatePrestigePerks();
 		applySynergies();
+		// Seed tier map silently (no toasts on load)
+		state.businesses.forEach(biz => {
+			const idx = getBusinessTierIndex(biz);
+			if (idx >= 0) businessTierMap.set(biz.id, idx);
+		});
 		initDaily();
 		checkAchievements();
 	}
@@ -544,6 +591,7 @@ function createGame() {
 		// Milestone progress
 		get milestoneNext() { return milestoneNext; },
 		get milestoneProgress() { return milestoneProgress; },
+		getBusinessTierIndex, getBusinessTierBonus,
 		getBusinessCost, getUpgradeCost, getDailyEvent,
 		init, tick, save,
 		doWork, buyBusiness, buyUpgrade,
